@@ -69,11 +69,13 @@
 </p>
 
 <p align="center">
-  <img
-    width="825"
-    src="/assets/zhihu-orbit.svg"
-    alt="Zhihu writing orbit"
-  />
+  <a href="https://www.zhihu.com/people/7-63-5-13-42">
+    <img
+      width="825"
+      src="/assets/zhihu-orbit.svg"
+      alt="Zhihu writing orbit"
+    />
+  </a>
 </p>
 
 <p align="center">
