@@ -10,15 +10,15 @@
   <picture>
     <source
       media="(prefers-color-scheme: dark)"
-      srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=26&pause=900&color=7DD3FC&center=true&vCenter=true&random=false&width=720&height=56&lines=I+LOVE+OPEN+SOURCE;Learning%2C+building%2C+shipping;Code+%2B+notes+%2B+ideas"
+      srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=26&pause=900&color=7DD3FC&center=true&vCenter=true&random=false&width=760&height=56&lines=Math+%2B+Physics+Enthusiast;Writing+ideas+on+Zhihu;Open+source%2C+notes%2C+and+curiosity"
     />
     <source
       media="(prefers-color-scheme: light)"
-      srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=26&pause=900&color=2563EB&center=true&vCenter=true&random=false&width=720&height=56&lines=I+LOVE+OPEN+SOURCE;Learning%2C+building%2C+shipping;Code+%2B+notes+%2B+ideas"
+      srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=26&pause=900&color=2563EB&center=true&vCenter=true&random=false&width=760&height=56&lines=Math+%2B+Physics+Enthusiast;Writing+ideas+on+Zhihu;Open+source%2C+notes%2C+and+curiosity"
     />
     <img
-      alt="I LOVE OPEN SOURCE"
-      src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=26&pause=900&color=7DD3FC&center=true&vCenter=true&random=false&width=720&height=56&lines=I+LOVE+OPEN+SOURCE;Learning%2C+building%2C+shipping;Code+%2B+notes+%2B+ideas"
+      alt="Math plus physics enthusiast"
+      src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=26&pause=900&color=7DD3FC&center=true&vCenter=true&random=false&width=760&height=56&lines=Math+%2B+Physics+Enthusiast;Writing+ideas+on+Zhihu;Open+source%2C+notes%2C+and+curiosity"
     />
   </picture>
 </p>
@@ -34,6 +34,14 @@
     <img src="https://img.shields.io/badge/Zhihu-0084FF?style=for-the-badge&logo=zhihu&logoColor=white" alt="Zhihu" />
   </a>
   <img src="https://komarev.com/ghpvc/?username=JieteXue&style=for-the-badge&color=2563EB&label=PROFILE+VIEWS" alt="Profile views" />
+</p>
+
+<p align="center">
+  <img
+    width="825"
+    src="/assets/math-physics-console.svg"
+    alt="Math and physics console"
+  />
 </p>
 
 <p align="center">
@@ -63,8 +71,8 @@
 <p align="center">
   <img
     width="825"
-    src="/assets/profile-pulse.svg"
-    alt="Profile pulse"
+    src="/assets/zhihu-orbit.svg"
+    alt="Zhihu writing orbit"
   />
 </p>
 

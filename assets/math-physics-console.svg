@@ -1,0 +1,51 @@
+<svg width="825" height="245" viewBox="0 0 825 245" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Math and physics console</title>
+  <desc id="desc">A terminal-inspired panel introducing JieteXue as a math and physics enthusiast who writes on Zhihu.</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="825" y2="245" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#020617"/>
+      <stop offset="0.55" stop-color="#0B1120"/>
+      <stop offset="1" stop-color="#082F49"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="40" y1="0" x2="785" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="0.52" stop-color="#A78BFA"/>
+      <stop offset="1" stop-color="#F59E0B"/>
+    </linearGradient>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="825" height="245" rx="18" fill="url(#panel)"/>
+  <rect x="1" y="1" width="823" height="243" rx="17" stroke="#38BDF8" stroke-opacity="0.32" stroke-width="2"/>
+  <path d="M38 72 H787" stroke="url(#accent)" stroke-width="2" stroke-linecap="round"/>
+
+  <circle cx="38" cy="36" r="7" fill="#EF4444"/>
+  <circle cx="62" cy="36" r="7" fill="#F59E0B"/>
+  <circle cx="86" cy="36" r="7" fill="#22C55E"/>
+  <text x="118" y="42" fill="#94A3B8" font-family="JetBrains Mono, Consolas, monospace" font-size="14">jietexue@github: ~/math-physics</text>
+
+  <g font-family="JetBrains Mono, Consolas, monospace" font-size="18">
+    <text x="40" y="108" fill="#38BDF8">$ whoami</text>
+    <text x="152" y="108" fill="#E5E7EB">math &amp; physics enthusiast</text>
+    <text x="40" y="143" fill="#38BDF8">$ currently_exploring</text>
+    <text x="276" y="143" fill="#E5E7EB">calculus · mechanics · fields · code</text>
+    <text x="40" y="178" fill="#38BDF8">$ writing_on</text>
+    <text x="178" y="178" fill="#E5E7EB">Zhihu notes, questions, and small insights</text>
+    <text x="40" y="213" fill="#38BDF8">$ motto</text>
+    <text x="136" y="213" fill="#E5E7EB">derive carefully, build curiously</text>
+  </g>
+
+  <g filter="url(#softGlow)" opacity="0.95">
+    <text x="604" y="126" fill="#A78BFA" font-family="Georgia, Times New Roman, serif" font-size="44">∫</text>
+    <text x="650" y="120" fill="#38BDF8" font-family="Georgia, Times New Roman, serif" font-size="32">∇ × B</text>
+    <text x="606" y="172" fill="#F59E0B" font-family="Georgia, Times New Roman, serif" font-size="30">E = mc²</text>
+    <path d="M700 154 C722 124 748 124 770 154 C748 184 722 184 700 154Z" stroke="#22D3EE" stroke-opacity="0.8" stroke-width="2"/>
+    <circle cx="735" cy="154" r="5" fill="#22D3EE"/>
+  </g>
+</svg>
