@@ -40,9 +40,10 @@
   </g>
 
   <g filter="url(#softGlow)" opacity="0.95">
-    <rect x="588" y="96" width="198" height="102" rx="14" fill="#020617" fill-opacity="0.48" stroke="#38BDF8" stroke-opacity="0.3"/>
-    <text x="610" y="130" fill="#A78BFA" font-family="Georgia, Times New Roman, serif" font-size="32">∫ e<tspan baseline-shift="super" font-size="18">iπ</tspan> + 1 = 0</text>
-    <text x="610" y="164" fill="#38BDF8" font-family="Georgia, Times New Roman, serif" font-size="27">∇ · E = ρ / ε<tspan baseline-shift="sub" font-size="16">0</tspan></text>
-    <text x="610" y="190" fill="#F59E0B" font-family="JetBrains Mono, Consolas, monospace" font-size="13">math ⇄ physics ⇄ code</text>
+    <rect x="586" y="88" width="204" height="116" rx="14" fill="#020617" fill-opacity="0.48" stroke="#38BDF8" stroke-opacity="0.3"/>
+    <text x="608" y="122" fill="#A78BFA" font-family="Georgia, Times New Roman, serif" font-size="27">e<tspan baseline-shift="super" font-size="15">iπ</tspan> + 1 = 0</text>
+    <text x="608" y="157" fill="#38BDF8" font-family="Georgia, Times New Roman, serif" font-size="23">∇ · E = ρ / ε<tspan baseline-shift="sub" font-size="13">0</tspan></text>
+    <path d="M608 176 H768" stroke="#38BDF8" stroke-opacity="0.24" stroke-width="1"/>
+    <text x="608" y="194" fill="#F59E0B" font-family="JetBrains Mono, Consolas, monospace" font-size="12">math ⇄ physics ⇄ code</text>
   </g>
 </svg>
