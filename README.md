@@ -63,8 +63,8 @@
 <p align="center">
   <img
     width="825"
-    src="https://github-profile-trophy.vercel.app/?username=JieteXue&theme=algolia&no-frame=true&no-bg=true&column=7&margin-w=8&margin-h=8"
-    alt="GitHub trophies"
+    src="/assets/profile-pulse.svg"
+    alt="Profile pulse"
   />
 </p>
 

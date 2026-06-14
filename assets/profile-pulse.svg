@@ -1,0 +1,58 @@
+<svg width="825" height="210" viewBox="0 0 825 210" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">JieteXue profile pulse</title>
+  <desc id="desc">A decorative profile panel showing interests in code, notes, open source, and Zhihu.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="825" y2="210" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#020617"/>
+      <stop offset="0.48" stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#082F49"/>
+    </linearGradient>
+    <linearGradient id="line" x1="60" y1="116" x2="765" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="0.5" stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#F59E0B"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="825" height="210" rx="18" fill="url(#bg)"/>
+  <rect x="1" y="1" width="823" height="208" rx="17" stroke="#38BDF8" stroke-opacity="0.35" stroke-width="2"/>
+
+  <circle cx="92" cy="54" r="44" fill="#38BDF8" fill-opacity="0.12" filter="url(#glow)"/>
+  <circle cx="720" cy="156" r="54" fill="#F59E0B" fill-opacity="0.10" filter="url(#glow)"/>
+
+  <text x="52" y="48" fill="#E5E7EB" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Profile Pulse</text>
+  <text x="52" y="75" fill="#94A3B8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14">code, notes, open source, and ideas in motion</text>
+
+  <path d="M60 122 C126 62 170 166 236 106 S344 92 412 124 S528 152 590 96 S700 72 765 118" stroke="url(#line)" stroke-width="5" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M60 142 C126 82 170 186 236 126 S344 112 412 144 S528 172 590 116 S700 92 765 138" stroke="#38BDF8" stroke-opacity="0.18" stroke-width="3" stroke-linecap="round"/>
+
+  <g font-family="Inter, Segoe UI, Arial, sans-serif">
+    <g transform="translate(52 150)">
+      <rect width="150" height="38" rx="10" fill="#0F172A" stroke="#38BDF8" stroke-opacity="0.35"/>
+      <text x="16" y="25" fill="#E5E7EB" font-size="14" font-weight="700">Build</text>
+      <circle cx="124" cy="19" r="6" fill="#38BDF8"/>
+    </g>
+    <g transform="translate(230 150)">
+      <rect width="150" height="38" rx="10" fill="#0F172A" stroke="#22D3EE" stroke-opacity="0.35"/>
+      <text x="16" y="25" fill="#E5E7EB" font-size="14" font-weight="700">Learn</text>
+      <circle cx="124" cy="19" r="6" fill="#22D3EE"/>
+    </g>
+    <g transform="translate(408 150)">
+      <rect width="150" height="38" rx="10" fill="#0F172A" stroke="#60A5FA" stroke-opacity="0.35"/>
+      <text x="16" y="25" fill="#E5E7EB" font-size="14" font-weight="700">Share</text>
+      <circle cx="124" cy="19" r="6" fill="#60A5FA"/>
+    </g>
+    <g transform="translate(586 150)">
+      <rect width="187" height="38" rx="10" fill="#0F172A" stroke="#F59E0B" stroke-opacity="0.35"/>
+      <text x="16" y="25" fill="#E5E7EB" font-size="14" font-weight="700">Stay Curious</text>
+      <circle cx="160" cy="19" r="6" fill="#F59E0B"/>
+    </g>
+  </g>
+</svg>
