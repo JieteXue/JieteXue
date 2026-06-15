@@ -24,6 +24,14 @@
 </p>
 
 <p align="center">
+  <img
+    width="825"
+    src="/assets/signal-field.svg"
+    alt="Animated math and physics signal field"
+  />
+</p>
+
+<p align="center">
   <a href="https://github.com/JieteXue?tab=followers">
     <img src="https://img.shields.io/github/followers/JieteXue?style=for-the-badge&logo=github&label=Followers&color=111827&labelColor=2563EB" alt="GitHub followers" />
   </a>

@@ -1,0 +1,73 @@
+<svg width="825" height="170" viewBox="0 0 825 170" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Animated signal field</title>
+  <desc id="desc">An animated math and physics signal field with wave traces, particles, and small formula marks.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="825" y2="170" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#020617"/>
+      <stop offset="0.52" stop-color="#07111F"/>
+      <stop offset="1" stop-color="#082F49"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="52" y1="0" x2="773" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="0.48" stop-color="#A78BFA"/>
+      <stop offset="1" stop-color="#F59E0B"/>
+    </linearGradient>
+    <radialGradient id="node" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 0) scale(18)">
+      <stop stop-color="#E0F2FE"/>
+      <stop offset="0.42" stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#38BDF8" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow" x="-35%" y="-55%" width="170%" height="210%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="clip">
+      <rect x="1" y="1" width="823" height="168" rx="16"/>
+    </clipPath>
+  </defs>
+
+  <rect width="825" height="170" rx="16" fill="url(#bg)"/>
+  <rect x="1" y="1" width="823" height="168" rx="15" stroke="#38BDF8" stroke-opacity="0.26" stroke-width="2"/>
+
+  <g clip-path="url(#clip)">
+    <g opacity="0.16">
+      <path d="M56 33H769 M56 65H769 M56 97H769 M56 129H769" stroke="#38BDF8"/>
+      <path d="M100 18V152 M200 18V152 M300 18V152 M400 18V152 M500 18V152 M600 18V152 M700 18V152" stroke="#60A5FA"/>
+    </g>
+
+    <path d="M42 92 C111 33 167 137 235 78 S351 54 420 93 S538 128 610 70 S724 43 789 91" stroke="url(#wave)" stroke-width="3.5" stroke-linecap="round" filter="url(#glow)" stroke-dasharray="46 18">
+      <animate attributeName="stroke-dashoffset" values="0;-128" dur="4.8s" repeatCount="indefinite"/>
+    </path>
+    <path d="M42 113 C122 66 172 146 244 106 S351 90 422 119 S539 146 612 102 S724 76 789 118" stroke="#38BDF8" stroke-opacity="0.28" stroke-width="2" stroke-linecap="round" stroke-dasharray="28 18">
+      <animate attributeName="stroke-dashoffset" values="0;92" dur="6.2s" repeatCount="indefinite"/>
+    </path>
+
+    <g filter="url(#glow)">
+      <circle r="8" fill="url(#node)">
+        <animateMotion dur="6.8s" repeatCount="indefinite" path="M42 92 C111 33 167 137 235 78 S351 54 420 93 S538 128 610 70 S724 43 789 91"/>
+      </circle>
+      <circle r="6" fill="url(#node)" opacity="0.9">
+        <animateMotion dur="7.6s" begin="-2.2s" repeatCount="indefinite" path="M42 113 C122 66 172 146 244 106 S351 90 422 119 S539 146 612 102 S724 76 789 118"/>
+      </circle>
+      <circle cx="190" cy="58" r="4" fill="#A78BFA">
+        <animate attributeName="opacity" values="0.25;1;0.25" dur="2.8s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="636" cy="72" r="4" fill="#F59E0B">
+        <animate attributeName="opacity" values="1;0.25;1" dur="3.2s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <g font-family="JetBrains Mono, Consolas, monospace" font-size="13" font-weight="700">
+      <text x="58" y="45" fill="#7DD3FC" opacity="0.9">ψ(x,t)</text>
+      <text x="662" y="45" fill="#FBBF24" opacity="0.9">∇ · E</text>
+      <text x="355" y="145" fill="#C4B5FD" opacity="0.86">Σ curiosity</text>
+    </g>
+
+    <rect x="-140" y="0" width="120" height="170" fill="#E0F2FE" opacity="0.08" transform="skewX(-18)">
+      <animate attributeName="x" values="-160;900" dur="5.4s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+</svg>
