@@ -45,20 +45,13 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/lowlighter/metrics">
-    <img width="425" align="right" src="/github-metrics.svg" alt="GitHub metrics" />
+  <a href="https://github.com/JieteXue">
+    <img width="49%" src="https://github-readme-stats.vercel.app/api?username=JieteXue&show_icons=true&hide_border=true&rank_icon=github&bg_color=00000000&title_color=38BDF8&text_color=94A3B8&icon_color=22D3EE" alt="JieteXue GitHub stats" />
   </a>
   <a href="https://github.com/JieteXue">
-    <img
-      width="390"
-      align="left"
-      src="https://github-readme-stats.vercel.app/api?username=JieteXue&show_icons=true&hide_border=true&rank_icon=github&bg_color=00000000&title_color=38BDF8&text_color=94A3B8&icon_color=22D3EE"
-      alt="JieteXue GitHub stats"
-    />
+    <img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=JieteXue&layout=compact&hide_border=true&bg_color=00000000&title_color=38BDF8&text_color=94A3B8&icon_color=22D3EE" alt="JieteXue top languages" />
   </a>
 </p>
-
-<br clear="both" />
 
 <p align="center">
   <img
