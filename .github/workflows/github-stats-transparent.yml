@@ -1,0 +1,49 @@
+name: Transparent Stats
+
+on:
+  schedule:
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate transparent stats
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN || secrets.METRICS_TOKEN }}
+          GITHUB_ACTOR: JieteXue
+          EXCLUDED: ${{ secrets.EXCLUDED }}
+          EXCLUDED_LANGS: ${{ secrets.EXCLUDED_LANGS }}
+          COUNT_STATS_FROM_FORKS: ${{ secrets.COUNT_STATS_FROM_FORKS }}
+        run: |
+          git clone --depth 1 https://github.com/rahul-jha98/github-stats-transparent.git stats
+          cd stats
+          python3 -m pip install --upgrade pip setuptools wheel
+          python3 -m pip install -r requirements.txt
+          python3 generate_images.py
+
+      - name: Check out output branch
+        uses: actions/checkout@v4
+        with:
+          ref: output
+          path: output-branch
+
+      - name: Publish generated stats
+        run: |
+          mkdir -p output-branch/generated
+          cp stats/generated/overview.svg output-branch/generated/overview.svg
+          cp stats/generated/languages.svg output-branch/generated/languages.svg
+          cd output-branch
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add generated/overview.svg generated/languages.svg
+          git commit -m "Generate transparent stats" || exit 0
+          git pull --rebase origin output
+          git push origin output

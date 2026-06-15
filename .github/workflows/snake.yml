@@ -23,12 +23,20 @@ jobs:
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
 
-      - name: Push generated files
-        uses: crazy-max/ghaction-github-pages@v4
+      - name: Check out output branch
+        uses: actions/checkout@v4
         with:
-          target_branch: output
-          build_dir: dist
-          keep_history: false
-          commit_message: Generate contribution snake
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ref: output
+          path: output-branch
+
+      - name: Publish contribution snake
+        run: |
+          cp dist/github-contribution-grid-snake.svg output-branch/github-contribution-grid-snake.svg
+          cp dist/github-contribution-grid-snake-dark.svg output-branch/github-contribution-grid-snake-dark.svg
+          cd output-branch
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add github-contribution-grid-snake.svg github-contribution-grid-snake-dark.svg
+          git commit -m "Generate contribution snake" || exit 0
+          git pull --rebase origin output
+          git push origin output

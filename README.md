@@ -45,11 +45,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/JieteXue">
-    <img width="49%" src="https://github-readme-stats.vercel.app/api?username=JieteXue&show_icons=true&include_all_commits=true&count_private=true&hide_border=true&rank_icon=github&bg_color=00000000&title_color=38BDF8&text_color=94A3B8&icon_color=22D3EE" alt="JieteXue GitHub stats" />
+  <a href="https://github.com/rahul-jha98/github-stats-transparent">
+    <img width="49%" src="https://raw.githubusercontent.com/JieteXue/JieteXue/output/generated/overview.svg" alt="JieteXue GitHub statistics" />
   </a>
-  <a href="https://github.com/JieteXue">
-    <img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=JieteXue&layout=compact&langs_count=10&hide=html,css&hide_border=true&bg_color=00000000&title_color=38BDF8&text_color=94A3B8&icon_color=22D3EE" alt="JieteXue top languages" />
+  <a href="https://github.com/rahul-jha98/github-stats-transparent">
+    <img width="49%" src="https://raw.githubusercontent.com/JieteXue/JieteXue/output/generated/languages.svg" alt="JieteXue most used languages" />
   </a>
 </p>
 
