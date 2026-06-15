@@ -39,6 +39,14 @@
 <p align="center">
   <img
     width="825"
+    src="/assets/current-focus.svg"
+    alt="Current focus"
+  />
+</p>
+
+<p align="center">
+  <img
+    width="825"
     src="/assets/math-physics-console.svg"
     alt="Math and physics console"
   />
