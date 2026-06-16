@@ -8,6 +8,9 @@
       "Tool",
       "LaTeX"
     ],
+    "seriesId": "math-physics-tools",
+    "status": "published",
+    "source": "zhihu",
     "categoryIds": [
       "code-tool"
     ]
@@ -20,6 +23,9 @@
       "Math",
       "Category Theory"
     ],
+    "seriesId": "math-structure-language",
+    "status": "published",
+    "source": "zhihu",
     "categoryIds": [
       "math"
     ]
@@ -32,6 +38,8 @@
       "Physics",
       "Noether"
     ],
+    "status": "published",
+    "source": "zhihu",
     "categoryIds": [
       "physics"
     ]
@@ -44,6 +52,9 @@
       "Physics",
       "Electromagnetism"
     ],
+    "seriesId": "electromagnetism-notes",
+    "status": "published",
+    "source": "zhihu",
     "categoryIds": [
       "physics"
     ]
@@ -56,6 +67,8 @@
       "Physics",
       "Approximation"
     ],
+    "status": "published",
+    "source": "zhihu",
     "categoryIds": [
       "physics"
     ]
@@ -68,6 +81,8 @@
       "Math",
       "Game Theory"
     ],
+    "status": "published",
+    "source": "zhihu",
     "categoryIds": [
       "math"
     ]
@@ -80,6 +95,9 @@
       "Physics",
       "Fluid Mechanics"
     ],
+    "seriesId": "fluid-mechanics-notes",
+    "status": "published",
+    "source": "zhihu",
     "categoryIds": [
       "physics"
     ]
@@ -92,6 +110,8 @@
       "Physics",
       "Mechanics"
     ],
+    "status": "published",
+    "source": "zhihu",
     "categoryIds": [
       "physics"
     ]
@@ -104,6 +124,9 @@
       "Physics",
       "Fluid Mechanics"
     ],
+    "seriesId": "fluid-mechanics-notes",
+    "status": "published",
+    "source": "zhihu",
     "categoryIds": [
       "physics"
     ]
@@ -117,6 +140,9 @@
       "PDE",
       "Tool"
     ],
+    "seriesId": "mathematica-tools",
+    "status": "published",
+    "source": "zhihu",
     "categoryIds": [
       "code-tool"
     ]
@@ -130,6 +156,9 @@
       "Physics",
       "Diffraction"
     ],
+    "seriesId": "mathematica-tools",
+    "status": "published",
+    "source": "zhihu",
     "categoryIds": [
       "code-tool",
       "physics"
@@ -143,6 +172,9 @@
       "Physics",
       "Electromagnetism"
     ],
+    "seriesId": "electromagnetism-notes",
+    "status": "published",
+    "source": "zhihu",
     "categoryIds": [
       "physics"
     ]
@@ -156,6 +188,9 @@
       "Physics",
       "Legendre"
     ],
+    "seriesId": "electromagnetism-notes",
+    "status": "published",
+    "source": "zhihu",
     "categoryIds": [
       "math",
       "physics"
@@ -169,6 +204,8 @@
       "Physics",
       "Mechanics"
     ],
+    "status": "published",
+    "source": "zhihu",
     "categoryIds": [
       "physics"
     ]

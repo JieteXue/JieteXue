@@ -14,8 +14,15 @@ export function countCategoryNodes(items) {
 }
 
 export function flattenCategories(categories, depth = 1) {
-  return categories.flatMap((category) => [
+  return sortCategories(categories).flatMap((category) => [
     { category, depth },
     ...flattenCategories(category.children ?? [], depth + 1),
   ]);
+}
+
+export function sortCategories(categories) {
+  return [...categories].sort((a, b) => {
+    const orderDelta = (a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER);
+    return orderDelta === 0 ? a.label.localeCompare(b.label) : orderDelta;
+  });
 }

@@ -1,16 +1,16 @@
-import { flattenCategories } from "./category-tree.mjs";
+import { flattenCategories, sortCategories } from "./category-tree.mjs";
 import { escapeAttribute, escapeHtml } from "./html.mjs";
 
 export function renderChapterNav(categories) {
   return renderChapterNavItems(categories, 0, { isFirst: true });
 }
 
-export function renderArticleSections(categories, items) {
-  return flattenCategories(categories).map((entry) => renderCategorySection(entry.category, items, entry.depth)).join("\n\n");
+export function renderArticleSections(categories, items, seriesMap = new Map()) {
+  return flattenCategories(categories).map((entry) => renderCategorySection(entry.category, items, entry.depth, seriesMap)).join("\n\n");
 }
 
 function renderChapterNavItems(categories, depth, state) {
-  return categories
+  return sortCategories(categories)
     .map((category) => {
       const activeClass = state.isFirst ? " is-active" : "";
       state.isFirst = false;
@@ -21,9 +21,9 @@ function renderChapterNavItems(categories, depth, state) {
     .join("\n");
 }
 
-function renderCategorySection(category, items, depth) {
+function renderCategorySection(category, items, depth, seriesMap) {
   const categoryArticles = items.filter((item) => item.categoryIds.includes(category.id));
-  const children = category.children ?? [];
+  const children = sortCategories(category.children ?? []);
   const headingTag = `h${Math.min(depth + 1, 6)}`;
   const eyebrow = getCategoryLevelLabel(depth);
   const emptyText = depth === 1 ? "这个章节暂时还没有文章。" : "这个主题暂时还没有文章。";
@@ -35,7 +35,7 @@ ${renderChildLinks(children)}
     categoryArticles.length === 0
       ? `            <p class="section-empty">${emptyText}</p>`
       : `            <div class="article-grid">
-${renderArticleCards(categoryArticles)}
+${renderArticleCards(categoryArticles, seriesMap)}
             </div>`;
 
   return `          <section class="article-section" id="${escapeAttribute(category.id)}" data-section data-depth="${depth}" style="--depth: ${depth - 1}">
@@ -50,7 +50,7 @@ ${body}
 }
 
 function renderChildLinks(categories) {
-  return categories
+  return sortCategories(categories)
     .map((category) => {
       return `              <a class="child-link" href="#${escapeAttribute(category.id)}">
                 <strong>${escapeHtml(category.label)}</strong>
@@ -72,11 +72,13 @@ function getCategoryLevelLabel(depth) {
   return "Topic";
 }
 
-function renderArticleCards(items) {
+function renderArticleCards(items, seriesMap) {
   return items
     .map((item) => {
       const tags = item.tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
-      const meta = item.date ? `${escapeHtml(item.date)} · Zhihu` : "Zhihu Article";
+      const series = item.seriesId ? seriesMap.get(item.seriesId) : undefined;
+      const metaParts = [item.date, series?.label, "Zhihu Article"].filter(Boolean).map(escapeHtml);
+      const meta = metaParts.join(" · ");
       return `              <article class="content-card article-card">
                 <div class="card-meta">${meta}</div>
                 <h3>${escapeHtml(item.title)}</h3>
