@@ -41,6 +41,10 @@ export function validateArticles(items, categoryMap, articlePath) {
       throw new Error(`${articlePath}[${index}].date must be omitted or a non-empty string.`);
     }
 
+    if (item.featured !== undefined && typeof item.featured !== "boolean") {
+      throw new Error(`${articlePath}[${index}].featured must be omitted or a boolean.`);
+    }
+
     if (!isZhihuUrl(item.url)) {
       throw new Error(`${articlePath}[${index}].url must be a Zhihu or Zhuanlan URL.`);
     }

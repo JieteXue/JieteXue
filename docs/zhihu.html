@@ -35,8 +35,79 @@
         </p>
       </section>
 
+      <section class="filter-panel" aria-label="Article filters">
+        <label class="search-box">
+          <span>Search</span>
+          <input id="article-search" type="search" placeholder="搜索标题、摘要或 tag" autocomplete="off" />
+        </label>
+        <div class="tag-filter-group" aria-label="Tag filters">
+          <button class="tag-chip is-active" type="button" data-tag-filter="all">All</button>
+<!-- TAG_FILTERS:START -->
+              <button class="tag-chip" type="button" data-tag-filter="Approximation">Approximation</button>
+              <button class="tag-chip" type="button" data-tag-filter="Category Theory">Category Theory</button>
+              <button class="tag-chip" type="button" data-tag-filter="Diffraction">Diffraction</button>
+              <button class="tag-chip" type="button" data-tag-filter="Electromagnetism">Electromagnetism</button>
+              <button class="tag-chip" type="button" data-tag-filter="Fluid Mechanics">Fluid Mechanics</button>
+              <button class="tag-chip" type="button" data-tag-filter="Game Theory">Game Theory</button>
+              <button class="tag-chip" type="button" data-tag-filter="LaTeX">LaTeX</button>
+              <button class="tag-chip" type="button" data-tag-filter="Legendre">Legendre</button>
+              <button class="tag-chip" type="button" data-tag-filter="Math">Math</button>
+              <button class="tag-chip" type="button" data-tag-filter="Mathematica">Mathematica</button>
+              <button class="tag-chip" type="button" data-tag-filter="Mechanics">Mechanics</button>
+              <button class="tag-chip" type="button" data-tag-filter="Noether">Noether</button>
+              <button class="tag-chip" type="button" data-tag-filter="PDE">PDE</button>
+              <button class="tag-chip" type="button" data-tag-filter="Physics">Physics</button>
+              <button class="tag-chip" type="button" data-tag-filter="TikZ">TikZ</button>
+              <button class="tag-chip" type="button" data-tag-filter="Tool">Tool</button>
+<!-- TAG_FILTERS:END -->
+        </div>
+      </section>
+
+      <section class="knowledge-map" aria-labelledby="knowledge-map-title">
+        <div class="section-heading">
+          <p class="eyebrow">Knowledge Map</p>
+          <h2 id="knowledge-map-title">站内知识地图</h2>
+          <p>由分类 JSON 自动生成，后续加 section、subsection 或 topic 会同步扩展。</p>
+        </div>
+<!-- KNOWLEDGE_MAP:START -->
+          <div class="knowledge-map-grid">
+              <div class="map-node" style="--depth: 0">
+                <a class="map-node-link" href="#code-tool">
+                  <span class="map-node-title">Code / Tool</span>
+                  <span class="map-node-desc">代码、工具、自动化和工程实践。</span>
+                  <span class="map-node-count">3 articles</span>
+                </a>
+              </div>
+              <div class="map-node" style="--depth: 0">
+                <a class="map-node-link" href="#math-physics">
+                  <span class="map-node-title">Math / Physics</span>
+                  <span class="map-node-desc">数学、物理和相关学习笔记。</span>
+                  <span class="map-node-count">12 articles</span>
+                </a>
+                <div class="map-children">
+              <div class="map-node" style="--depth: 1">
+                <a class="map-node-link" href="#math">
+                  <span class="map-node-title">Math</span>
+                  <span class="map-node-desc">数学主题、证明、结构和问题整理。</span>
+                  <span class="map-node-count">3 articles</span>
+                </a>
+              </div>
+              <div class="map-node" style="--depth: 1">
+                <a class="map-node-link" href="#physics">
+                  <span class="map-node-title">Physics</span>
+                  <span class="map-node-desc">物理直觉、模型、公式和推导笔记。</span>
+                  <span class="map-node-count">10 articles</span>
+                </a>
+              </div>
+                </div>
+              </div>
+          </div>
+<!-- KNOWLEDGE_MAP:END -->
+      </section>
+
       <div class="reading-layout">
         <div class="reading-main">
+          <p class="filter-empty" hidden data-filter-empty>没有匹配的文章。</p>
 <!-- ARTICLE_SECTIONS:START -->
           <section class="article-section" id="code-tool" data-section data-depth="1" style="--depth: 0">
             <div class="section-heading">
@@ -46,21 +117,21 @@
             </div>
 
             <div class="article-grid">
-              <article class="content-card article-card">
-                <div class="card-meta">Zhihu Article</div>
+              <article class="content-card article-card is-featured" data-article data-tags="TikZ|Tool|LaTeX" data-search="用 tikz 绘图的辅助工具 一个辅助 tikz 绘图工作流的工具型文章示例。 tikz tool latex">
+                <div class="card-meta">Featured · Zhihu Article</div>
                 <h3>用 TikZ 绘图的辅助工具</h3>
                 <p>一个辅助 TikZ 绘图工作流的工具型文章示例。</p>
                 <div class="tag-row"><span>TikZ</span><span>Tool</span><span>LaTeX</span></div>
                 <a class="button-link" href="https://zhuanlan.zhihu.com/p/2024245462408930681" target="_blank" rel="noreferrer">阅读知乎原文</a>
               </article>
-              <article class="content-card article-card">
+              <article class="content-card article-card" data-article data-tags="Mathematica|PDE|Tool" data-search="mathematica 解偏微分方程 (pde) 使用 mathematica 处理偏微分方程问题的工具型记录。 mathematica pde tool">
                 <div class="card-meta">Zhihu Article</div>
                 <h3>Mathematica 解偏微分方程 (PDE)</h3>
                 <p>使用 Mathematica 处理偏微分方程问题的工具型记录。</p>
                 <div class="tag-row"><span>Mathematica</span><span>PDE</span><span>Tool</span></div>
                 <a class="button-link" href="https://zhuanlan.zhihu.com/p/695471799" target="_blank" rel="noreferrer">阅读知乎原文</a>
               </article>
-              <article class="content-card article-card">
+              <article class="content-card article-card" data-article data-tags="Mathematica|Physics|Diffraction" data-search="mathematica 模拟衍射（正多边形） 用 mathematica 模拟正多边形孔径衍射图样。 mathematica physics diffraction">
                 <div class="card-meta">Zhihu Article</div>
                 <h3>Mathematica 模拟衍射（正多边形）</h3>
                 <p>用 Mathematica 模拟正多边形孔径衍射图样。</p>
@@ -98,21 +169,21 @@
             </div>
 
             <div class="article-grid">
-              <article class="content-card article-card">
-                <div class="card-meta">Zhihu Article</div>
+              <article class="content-card article-card is-featured" data-article data-tags="Math|Category Theory" data-search="范畴论语言简介 (a brief introduction to category theory) 用较轻量的方式介绍范畴论语言和基本对象。 math category theory">
+                <div class="card-meta">Featured · Zhihu Article</div>
                 <h3>范畴论语言简介 (A Brief Introduction to Category Theory)</h3>
                 <p>用较轻量的方式介绍范畴论语言和基本对象。</p>
                 <div class="tag-row"><span>Math</span><span>Category Theory</span></div>
                 <a class="button-link" href="https://zhuanlan.zhihu.com/p/2012820675967084119" target="_blank" rel="noreferrer">阅读知乎原文</a>
               </article>
-              <article class="content-card article-card">
+              <article class="content-card article-card" data-article data-tags="Math|Game Theory" data-search="icg 游戏 [nim 博弈与 plus 版] 是否有必胜策略？ 讨论 nim 博弈及 plus 版本中的必胜策略问题。 math game theory">
                 <div class="card-meta">Zhihu Article</div>
                 <h3>ICG 游戏 [NIM 博弈与 Plus 版] 是否有必胜策略？</h3>
                 <p>讨论 NIM 博弈及 Plus 版本中的必胜策略问题。</p>
                 <div class="tag-row"><span>Math</span><span>Game Theory</span></div>
                 <a class="button-link" href="https://zhuanlan.zhihu.com/p/1918439473382950153" target="_blank" rel="noreferrer">阅读知乎原文</a>
               </article>
-              <article class="content-card article-card">
+              <article class="content-card article-card" data-article data-tags="Math|Physics|Legendre" data-search="多极展开方法其一——勒让德多项式的母函数 从勒让德多项式的母函数切入理解多极展开方法。 math physics legendre">
                 <div class="card-meta">Zhihu Article</div>
                 <h3>多极展开方法其一——勒让德多项式的母函数</h3>
                 <p>从勒让德多项式的母函数切入理解多极展开方法。</p>
@@ -130,70 +201,70 @@
             </div>
 
             <div class="article-grid">
-              <article class="content-card article-card">
-                <div class="card-meta">Zhihu Article</div>
+              <article class="content-card article-card is-featured" data-article data-tags="Physics|Noether" data-search="诺特 (noether) 定理【简介】 介绍诺特定理的核心思想，以及对称性与守恒律之间的关系。 physics noether">
+                <div class="card-meta">Featured · Zhihu Article</div>
                 <h3>诺特 (Noether) 定理【简介】</h3>
                 <p>介绍诺特定理的核心思想，以及对称性与守恒律之间的关系。</p>
                 <div class="tag-row"><span>Physics</span><span>Noether</span></div>
                 <a class="button-link" href="https://zhuanlan.zhihu.com/p/1999801583450469239" target="_blank" rel="noreferrer">阅读知乎原文</a>
               </article>
-              <article class="content-card article-card">
+              <article class="content-card article-card" data-article data-tags="Physics|Electromagnetism" data-search="推迟势和电磁辐射 关于推迟势、电磁场传播以及辐射图像的物理笔记。 physics electromagnetism">
                 <div class="card-meta">Zhihu Article</div>
                 <h3>推迟势和电磁辐射</h3>
                 <p>关于推迟势、电磁场传播以及辐射图像的物理笔记。</p>
                 <div class="tag-row"><span>Physics</span><span>Electromagnetism</span></div>
                 <a class="button-link" href="https://zhuanlan.zhihu.com/p/1995599112456934512" target="_blank" rel="noreferrer">阅读知乎原文</a>
               </article>
-              <article class="content-card article-card">
+              <article class="content-card article-card" data-article data-tags="Physics|Approximation" data-search="缓变处理之相位积累法 围绕缓变近似与相位积累法的推导和应用整理。 physics approximation">
                 <div class="card-meta">Zhihu Article</div>
                 <h3>缓变处理之相位积累法</h3>
                 <p>围绕缓变近似与相位积累法的推导和应用整理。</p>
                 <div class="tag-row"><span>Physics</span><span>Approximation</span></div>
                 <a class="button-link" href="https://zhuanlan.zhihu.com/p/1928352347811222651" target="_blank" rel="noreferrer">阅读知乎原文</a>
               </article>
-              <article class="content-card article-card">
+              <article class="content-card article-card" data-article data-tags="Physics|Fluid Mechanics" data-search="随体导数分析与对积分的求导 关于随体导数、积分区域变化和积分求导的分析笔记。 physics fluid mechanics">
                 <div class="card-meta">Zhihu Article</div>
                 <h3>随体导数分析与对积分的求导</h3>
                 <p>关于随体导数、积分区域变化和积分求导的分析笔记。</p>
                 <div class="tag-row"><span>Physics</span><span>Fluid Mechanics</span></div>
                 <a class="button-link" href="https://zhuanlan.zhihu.com/p/716217523" target="_blank" rel="noreferrer">阅读知乎原文</a>
               </article>
-              <article class="content-card article-card">
+              <article class="content-card article-card" data-article data-tags="Physics|Mechanics" data-search="刚体在转动系中受到的科里奥利力（矩） 分析刚体在转动参考系中受到的科里奥利力和力矩。 physics mechanics">
                 <div class="card-meta">Zhihu Article</div>
                 <h3>刚体在转动系中受到的科里奥利力（矩）</h3>
                 <p>分析刚体在转动参考系中受到的科里奥利力和力矩。</p>
                 <div class="tag-row"><span>Physics</span><span>Mechanics</span></div>
                 <a class="button-link" href="https://zhuanlan.zhihu.com/p/714236094" target="_blank" rel="noreferrer">阅读知乎原文</a>
               </article>
-              <article class="content-card article-card">
+              <article class="content-card article-card" data-article data-tags="Physics|Fluid Mechanics" data-search="流体力学中的伯努利方程 整理伯努利方程在流体力学中的形式、条件和理解方式。 physics fluid mechanics">
                 <div class="card-meta">Zhihu Article</div>
                 <h3>流体力学中的伯努利方程</h3>
                 <p>整理伯努利方程在流体力学中的形式、条件和理解方式。</p>
                 <div class="tag-row"><span>Physics</span><span>Fluid Mechanics</span></div>
                 <a class="button-link" href="https://zhuanlan.zhihu.com/p/714077475" target="_blank" rel="noreferrer">阅读知乎原文</a>
               </article>
-              <article class="content-card article-card">
+              <article class="content-card article-card" data-article data-tags="Mathematica|Physics|Diffraction" data-search="mathematica 模拟衍射（正多边形） 用 mathematica 模拟正多边形孔径衍射图样。 mathematica physics diffraction">
                 <div class="card-meta">Zhihu Article</div>
                 <h3>Mathematica 模拟衍射（正多边形）</h3>
                 <p>用 Mathematica 模拟正多边形孔径衍射图样。</p>
                 <div class="tag-row"><span>Mathematica</span><span>Physics</span><span>Diffraction</span></div>
                 <a class="button-link" href="https://zhuanlan.zhihu.com/p/682031004" target="_blank" rel="noreferrer">阅读知乎原文</a>
               </article>
-              <article class="content-card article-card">
+              <article class="content-card article-card" data-article data-tags="Physics|Electromagnetism" data-search="电（磁）偶极子在电（磁）场中的受力 梳理电偶极子和磁偶极子在外场中的受力表达。 physics electromagnetism">
                 <div class="card-meta">Zhihu Article</div>
                 <h3>电（磁）偶极子在电（磁）场中的受力</h3>
                 <p>梳理电偶极子和磁偶极子在外场中的受力表达。</p>
                 <div class="tag-row"><span>Physics</span><span>Electromagnetism</span></div>
                 <a class="button-link" href="https://zhuanlan.zhihu.com/p/681640628" target="_blank" rel="noreferrer">阅读知乎原文</a>
               </article>
-              <article class="content-card article-card">
+              <article class="content-card article-card" data-article data-tags="Math|Physics|Legendre" data-search="多极展开方法其一——勒让德多项式的母函数 从勒让德多项式的母函数切入理解多极展开方法。 math physics legendre">
                 <div class="card-meta">Zhihu Article</div>
                 <h3>多极展开方法其一——勒让德多项式的母函数</h3>
                 <p>从勒让德多项式的母函数切入理解多极展开方法。</p>
                 <div class="tag-row"><span>Math</span><span>Physics</span><span>Legendre</span></div>
                 <a class="button-link" href="https://zhuanlan.zhihu.com/p/648319578" target="_blank" rel="noreferrer">阅读知乎原文</a>
               </article>
-              <article class="content-card article-card">
+              <article class="content-card article-card" data-article data-tags="Physics|Mechanics" data-search="浸渐不变量的推导及一点应用 推导浸渐不变量，并整理其在物理问题中的一点应用。 physics mechanics">
                 <div class="card-meta">Zhihu Article</div>
                 <h3>浸渐不变量的推导及一点应用</h3>
                 <p>推导浸渐不变量，并整理其在物理问题中的一点应用。</p>

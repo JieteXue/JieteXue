@@ -8,6 +8,7 @@
       "Tool",
       "LaTeX"
     ],
+    "featured": true,
     "categoryIds": [
       "code-tool"
     ]
@@ -20,6 +21,7 @@
       "Math",
       "Category Theory"
     ],
+    "featured": true,
     "categoryIds": [
       "math"
     ]
@@ -32,6 +34,7 @@
       "Physics",
       "Noether"
     ],
+    "featured": true,
     "categoryIds": [
       "physics"
     ]
