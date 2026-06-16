@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 const articlePath = "data/zhihu-articles.json";
 const articleCategoryPath = "data/zhihu-categories.json";
+const articleResourcePath = "data/zhihu-resources.json";
 const projectPath = "data/github-projects.json";
 
 const pageConfigs = [
@@ -9,14 +10,19 @@ const pageConfigs = [
     file: "zhihu.html",
     regions: [
       {
-        start: "<!-- ARTICLE_CATEGORIES:START -->",
-        end: "<!-- ARTICLE_CATEGORIES:END -->",
-        html: () => renderCategoryFilters(articleCategories),
+        start: "<!-- RESOURCE_LINKS:START -->",
+        end: "<!-- RESOURCE_LINKS:END -->",
+        html: () => renderResourceLinks(articleResources),
       },
       {
-        start: "<!-- ARTICLES:START -->",
-        end: "<!-- ARTICLES:END -->",
-        html: () => renderArticles(articles, articleCategoryMap),
+        start: "<!-- ARTICLE_SECTIONS:START -->",
+        end: "<!-- ARTICLE_SECTIONS:END -->",
+        html: () => renderArticleSections(articleCategories, articles),
+      },
+      {
+        start: "<!-- CHAPTER_NAV:START -->",
+        end: "<!-- CHAPTER_NAV:END -->",
+        html: () => renderChapterNav(articleCategories),
       },
     ],
   },
@@ -34,10 +40,12 @@ const pageConfigs = [
 
 const articles = readJson(articlePath);
 const articleCategories = readJson(articleCategoryPath);
+const articleResources = readJson(articleResourcePath);
 const projects = readJson(projectPath);
 const articleCategoryMap = validateCategories(articleCategories, articleCategoryPath);
 
 validateArticles(articles, articleCategoryMap);
+validateResources(articleResources, articleResourcePath);
 validateProjects(projects);
 
 for (const config of pageConfigs) {
@@ -47,7 +55,7 @@ for (const config of pageConfigs) {
 }
 
 console.log(
-  `Generated ${articles.length} Zhihu article(s), ${articleCategories.length} category filter(s), and ${projects.length} GitHub project(s).`,
+  `Generated ${articles.length} Zhihu article(s), ${articleResources.length} resource link(s), ${articleCategories.length} chapter(s), and ${projects.length} GitHub project(s).`,
 );
 
 function readJson(path) {
@@ -101,6 +109,22 @@ function validateArticles(items, categoryMap) {
         throw new Error(`${articlePath}[${index}].categoryIds contains unknown category "${categoryId}".`);
       }
     });
+  });
+}
+
+function validateResources(items, path) {
+  if (!Array.isArray(items)) {
+    throw new Error(`${path} must contain an array.`);
+  }
+
+  items.forEach((item, index) => {
+    requireString(item, "title", `${path}[${index}]`);
+    requireString(item, "url", `${path}[${index}]`);
+    requireString(item, "summary", `${path}[${index}]`);
+
+    if (!item.url.startsWith("https://www.zhihu.com/")) {
+      throw new Error(`${path}[${index}].url must be a Zhihu URL.`);
+    }
   });
 }
 
@@ -160,35 +184,66 @@ function updateRegion(file, start, end, html) {
   writeFileSync(file, next);
 }
 
-function renderCategoryFilters(items) {
-  const buttons = [
-    `        <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">
-          <strong>All</strong>
-          <span>全部文章</span>
-        </button>`,
-    ...items.map(
-      (item) => `        <button class="filter-button" type="button" data-filter="${escapeAttribute(item.id)}" aria-pressed="false">
-          <strong>${escapeHtml(item.label)}</strong>
-          <span>${escapeHtml(item.description)}</span>
-        </button>`,
-    ),
-  ];
+function renderResourceLinks(items) {
+  if (items.length === 0) {
+    return `              <p class="section-empty">暂时没有单独入口。</p>`;
+  }
 
-  return buttons.join("\n");
+  return items
+    .map((item) => {
+      return `              <article class="content-card resource-card">
+                <div class="card-meta">Zhihu Link</div>
+                <h3>${escapeHtml(item.title)}</h3>
+                <p>${escapeHtml(item.summary)}</p>
+                <a class="button-link" href="${escapeAttribute(item.url)}" target="_blank" rel="noreferrer">打开入口</a>
+              </article>`;
+    })
+    .join("\n");
 }
 
-function renderArticles(items, categoryMap) {
+function renderChapterNav(categories) {
+  const links = [
+    `          <a class="is-active" href="#zhihu-links">知乎入口</a>`,
+    ...categories.map((category) => `          <a href="#${escapeAttribute(category.id)}">${escapeHtml(category.label)}</a>`),
+  ];
+
+  return links.join("\n");
+}
+
+function renderArticleSections(categories, items) {
+  return categories
+    .map((category) => {
+      const categoryArticles = items.filter((item) => item.categoryIds.includes(category.id));
+      const body =
+        categoryArticles.length === 0
+          ? `            <p class="section-empty">这个章节暂时还没有文章。</p>`
+          : `          <div class="article-grid">
+${renderArticleCards(categoryArticles)}
+          </div>`;
+
+      return `          <section class="article-section" id="${escapeAttribute(category.id)}" data-section>
+            <div class="section-heading">
+              <p class="eyebrow">Chapter</p>
+              <h2>${escapeHtml(category.label)}</h2>
+              <p>${escapeHtml(category.description)}</p>
+            </div>
+${body}
+          </section>`;
+    })
+    .join("\n\n");
+}
+
+function renderArticleCards(items) {
   return items
     .map((item) => {
       const tags = item.tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
-      const categoryNames = item.categoryIds.map((categoryId) => categoryMap.get(categoryId).label);
-      return `        <article class="content-card article-card" data-categories="${escapeAttribute(item.categoryIds.join(" "))}">
-          <div class="card-meta">${escapeHtml(item.date)} · ${escapeHtml(categoryNames.join(" / "))}</div>
-          <h2>${escapeHtml(item.title)}</h2>
-          <p>${escapeHtml(item.summary)}</p>
-          <div class="tag-row">${tags}</div>
-          <a class="button-link" href="${escapeAttribute(item.url)}" target="_blank" rel="noreferrer">阅读知乎原文</a>
-        </article>`;
+      return `            <article class="content-card article-card">
+              <div class="card-meta">${escapeHtml(item.date)} · Zhihu</div>
+              <h3>${escapeHtml(item.title)}</h3>
+              <p>${escapeHtml(item.summary)}</p>
+              <div class="tag-row">${tags}</div>
+              <a class="button-link" href="${escapeAttribute(item.url)}" target="_blank" rel="noreferrer">阅读知乎原文</a>
+            </article>`;
     })
     .join("\n");
 }

@@ -7,287 +7,8 @@
     <title>JieteXue · Zhihu Articles</title>
     <meta name="description" content="JieteXue 发表在知乎上的文章展示页。" />
     <link rel="prefetch" href="./github.html" as="document" />
-    <style>
-      :root {
-        color-scheme: dark;
-        --bg: #05080f;
-        --panel: #0d1117;
-        --panel-2: #111827;
-        --line: #273244;
-        --text: #e6edf3;
-        --muted: #8b949e;
-        --blue: #2f81f7;
-        --cyan: #39c5cf;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        margin: 0;
-        min-height: 100vh;
-        background:
-          radial-gradient(circle at 12% 4%, rgba(47, 129, 247, 0.18), transparent 30rem),
-          radial-gradient(circle at 88% 12%, rgba(57, 197, 207, 0.12), transparent 28rem),
-          #05080f;
-        color: var(--text);
-        font-family:
-          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .site-shell {
-        width: min(1120px, calc(100% - 32px));
-        margin: 0 auto;
-      }
-
-      .topbar {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        backdrop-filter: blur(18px);
-        background: rgba(5, 8, 15, 0.78);
-        border-bottom: 1px solid rgba(39, 50, 68, 0.74);
-      }
-
-      .topbar-inner {
-        min-height: 68px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-weight: 700;
-      }
-
-      .mark {
-        display: grid;
-        place-items: center;
-        width: 34px;
-        height: 34px;
-        border: 1px solid rgba(57, 197, 207, 0.5);
-        border-radius: 8px;
-        background: #0d1117;
-        color: var(--cyan);
-        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      }
-
-      .nav {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-      }
-
-      .nav a {
-        min-height: 38px;
-        display: inline-flex;
-        align-items: center;
-        border: 1px solid transparent;
-        border-radius: 8px;
-        padding: 0 12px;
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .nav a:hover,
-      .nav a[aria-current="page"] {
-        color: var(--text);
-        border-color: var(--line);
-        background: rgba(13, 17, 23, 0.9);
-      }
-
-      .page-head {
-        padding: 52px 0 24px;
-      }
-
-      .eyebrow {
-        margin: 0 0 14px;
-        color: var(--cyan);
-        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-        font-size: 13px;
-        text-transform: uppercase;
-      }
-
-      h1 {
-        margin: 0;
-        font-size: clamp(38px, 6vw, 68px);
-        line-height: 1;
-      }
-
-      .lead {
-        max-width: 720px;
-        margin: 18px 0 0;
-        color: #b7c2cf;
-        font-size: 17px;
-        line-height: 1.72;
-      }
-
-      .filter-panel {
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        padding: 16px;
-        margin: 2px 0 20px;
-        background: rgba(13, 17, 23, 0.82);
-      }
-
-      .filter-label {
-        margin: 0 0 12px;
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .filter-row {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 12px;
-      }
-
-      .filter-button {
-        min-height: 78px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        padding: 12px;
-        color: var(--muted);
-        background: rgba(17, 24, 39, 0.76);
-        text-align: left;
-        cursor: pointer;
-      }
-
-      .filter-button:hover,
-      .filter-button.is-active {
-        border-color: rgba(47, 129, 247, 0.78);
-        color: var(--text);
-        background: rgba(47, 129, 247, 0.14);
-      }
-
-      .filter-button strong,
-      .filter-button span {
-        display: block;
-      }
-
-      .filter-button strong {
-        font-size: 15px;
-      }
-
-      .filter-button span {
-        margin-top: 6px;
-        line-height: 1.38;
-        font-size: 12px;
-      }
-
-      .empty-state {
-        display: none;
-        border: 1px dashed var(--line);
-        border-radius: 8px;
-        padding: 24px;
-        color: var(--muted);
-        background: rgba(13, 17, 23, 0.68);
-      }
-
-      .content-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 18px;
-        padding: 12px 0 58px;
-      }
-
-      .content-card {
-        display: flex;
-        min-height: 260px;
-        flex-direction: column;
-        justify-content: space-between;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        padding: 22px;
-        background: rgba(13, 17, 23, 0.9);
-        box-shadow: 0 22px 80px rgba(0, 0, 0, 0.28);
-      }
-
-      .card-meta {
-        color: var(--cyan);
-        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-        font-size: 12px;
-        text-transform: uppercase;
-      }
-
-      .content-card h2 {
-        margin: 14px 0 0;
-        font-size: 24px;
-        line-height: 1.22;
-      }
-
-      .content-card p {
-        margin: 12px 0 18px;
-        color: var(--muted);
-        line-height: 1.68;
-      }
-
-      .tag-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin: 0 0 20px;
-      }
-
-      .tag-row span {
-        border: 1px solid rgba(47, 129, 247, 0.38);
-        border-radius: 999px;
-        padding: 6px 10px;
-        color: #b7d7ff;
-        background: rgba(47, 129, 247, 0.12);
-        font-size: 12px;
-      }
-
-      .button-link {
-        min-height: 42px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        align-self: flex-start;
-        border: 1px solid rgba(47, 129, 247, 0.75);
-        border-radius: 8px;
-        padding: 0 14px;
-        background: #1f6feb;
-        color: white;
-        font-weight: 700;
-      }
-
-      .footer {
-        border-top: 1px solid var(--line);
-        padding: 28px 0 36px;
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      @media (max-width: 760px) {
-        .topbar-inner,
-        .filter-row,
-        .content-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .topbar-inner {
-          align-items: flex-start;
-          padding: 14px 0;
-        }
-
-        .content-card {
-          min-height: 0;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="./assets/zhihu.css" />
+    <script src="./assets/zhihu.js" defer></script>
   </head>
   <body>
     <header class="topbar">
@@ -310,77 +31,64 @@
         <p class="eyebrow">Published on Zhihu</p>
         <h1 id="page-title">知乎文章</h1>
         <p class="lead">
-          这里集中放已经发表在知乎上的文章。以后只需要维护 <code>data/zhihu-articles.json</code>，自动化会更新这个展示页。
+          这里按章节整理已经发表在知乎上的文章；知乎主页等入口不会混进文章列表。分类、入口和文章都由 JSON 数据控制。
         </p>
       </section>
 
-      <section class="filter-panel" aria-label="Article categories">
-        <p class="filter-label">按分类筛选</p>
-        <div class="filter-row">
-<!-- ARTICLE_CATEGORIES:START -->
-        <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">
-          <strong>All</strong>
-          <span>全部文章</span>
-        </button>
-        <button class="filter-button" type="button" data-filter="code-tool" aria-pressed="false">
-          <strong>Code / Tool</strong>
-          <span>代码、工具、自动化和工程实践。</span>
-        </button>
-        <button class="filter-button" type="button" data-filter="math-physics" aria-pressed="false">
-          <strong>Math / Physics</strong>
-          <span>数学、物理和相关学习笔记。</span>
-        </button>
-<!-- ARTICLE_CATEGORIES:END -->
+      <div class="reading-layout">
+        <div class="reading-main">
+          <section class="resource-section" id="zhihu-links" data-section>
+            <div class="section-heading">
+              <p class="eyebrow">Links</p>
+              <h2>知乎入口</h2>
+              <p>不属于具体文章分类的主页、专栏或合集入口放在这里。</p>
+            </div>
+            <div class="resource-grid">
+<!-- RESOURCE_LINKS:START -->
+              <article class="content-card resource-card">
+                <div class="card-meta">Zhihu Link</div>
+                <h3>知乎主页</h3>
+                <p>知乎个人主页和所有动态入口。</p>
+                <a class="button-link" href="https://www.zhihu.com/people/7-63-5-13-42/posts" target="_blank" rel="noreferrer">打开入口</a>
+              </article>
+<!-- RESOURCE_LINKS:END -->
+            </div>
+          </section>
+
+<!-- ARTICLE_SECTIONS:START -->
+          <section class="article-section" id="code-tool" data-section>
+            <div class="section-heading">
+              <p class="eyebrow">Chapter</p>
+              <h2>Code / Tool</h2>
+              <p>代码、工具、自动化和工程实践。</p>
+            </div>
+            <p class="section-empty">这个章节暂时还没有文章。</p>
+          </section>
+
+          <section class="article-section" id="math-physics" data-section>
+            <div class="section-heading">
+              <p class="eyebrow">Chapter</p>
+              <h2>Math / Physics</h2>
+              <p>数学、物理和相关学习笔记。</p>
+            </div>
+            <p class="section-empty">这个章节暂时还没有文章。</p>
+          </section>
+<!-- ARTICLE_SECTIONS:END -->
         </div>
-      </section>
 
-      <p class="empty-state" data-empty-state>这个分类下暂时还没有文章。</p>
-
-      <section class="content-grid" aria-label="Zhihu articles">
-<!-- ARTICLES:START -->
-        <article class="content-card article-card" data-categories="code-tool">
-          <div class="card-meta">2023-02 · Code / Tool</div>
-          <h2>知乎主页</h2>
-          <p>个人主页</p>
-          <div class="tag-row"><span>Zhihu</span><span>profile</span></div>
-          <a class="button-link" href="https://www.zhihu.com/people/7-63-5-13-42/posts" target="_blank" rel="noreferrer">阅读知乎原文</a>
-        </article>
-<!-- ARTICLES:END -->
-      </section>
+        <aside class="chapter-nav" aria-label="Zhihu chapter navigation">
+          <p>目录</p>
+<!-- CHAPTER_NAV:START -->
+          <a class="is-active" href="#zhihu-links">知乎入口</a>
+          <a href="#code-tool">Code / Tool</a>
+          <a href="#math-physics">Math / Physics</a>
+<!-- CHAPTER_NAV:END -->
+        </aside>
+      </div>
     </main>
 
     <footer class="footer">
-      <div class="site-shell">Zhihu article list is generated from data/zhihu-articles.json.</div>
+      <div class="site-shell">Zhihu page is generated from JSON data files.</div>
     </footer>
-    <script>
-      const filterButtons = Array.from(document.querySelectorAll("[data-filter]"));
-      const articleCards = Array.from(document.querySelectorAll("[data-categories]"));
-      const emptyState = document.querySelector("[data-empty-state]");
-
-      function applyFilter(filter) {
-        let visibleCount = 0;
-
-        articleCards.forEach((card) => {
-          const categories = card.dataset.categories.split(" ");
-          const isVisible = filter === "all" || categories.includes(filter);
-          card.hidden = !isVisible;
-          if (isVisible) {
-            visibleCount += 1;
-          }
-        });
-
-        filterButtons.forEach((button) => {
-          const isActive = button.dataset.filter === filter;
-          button.classList.toggle("is-active", isActive);
-          button.setAttribute("aria-pressed", String(isActive));
-        });
-
-        emptyState.style.display = visibleCount === 0 ? "block" : "none";
-      }
-
-      filterButtons.forEach((button) => {
-        button.addEventListener("click", () => applyFilter(button.dataset.filter));
-      });
-    </script>
   </body>
 </html>

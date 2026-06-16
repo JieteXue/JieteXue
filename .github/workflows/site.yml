@@ -7,6 +7,8 @@ on:
     paths:
       - "data/**"
       - "scripts/build-site.mjs"
+      - "assets/zhihu.css"
+      - "assets/zhihu.js"
       - "index.html"
       - "zhihu.html"
       - "github.html"
