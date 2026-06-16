@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "title": "用 TikZ 绘图的辅助工具",
+    "url": "https://zhuanlan.zhihu.com/p/2024245462408930681",
+    "date": "2026-06",
+    "summary": "一个辅助 TikZ 绘图工作流的工具型文章示例。",
+    "tags": ["TikZ", "Tool", "LaTeX"],
+    "categoryIds": ["code-tool"]
+  },
+  {
+    "title": "范畴论语言简介 (A Brief Introduction to Category Theory)",
+    "url": "https://zhuanlan.zhihu.com/p/2012820675967084119",
+    "date": "2026-06",
+    "summary": "用较轻量的方式介绍范畴论语言和基本对象。",
+    "tags": ["Math", "Category Theory"],
+    "categoryIds": ["math"]
+  },
+  {
+    "title": "诺特 (Noether) 定理【简介】",
+    "url": "https://zhuanlan.zhihu.com/p/1999801583450469239",
+    "date": "2026-06",
+    "summary": "介绍诺特定理的核心思想，以及对称性与守恒律之间的关系。",
+    "tags": ["Physics", "Noether"],
+    "categoryIds": ["physics"]
+  }
+]

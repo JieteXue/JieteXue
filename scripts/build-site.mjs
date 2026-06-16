@@ -97,8 +97,8 @@ function validateArticles(items, categoryMap) {
     requireArray(item, "tags", `${articlePath}[${index}]`);
     requireArray(item, "categoryIds", `${articlePath}[${index}]`);
 
-    if (!item.url.startsWith("https://www.zhihu.com/")) {
-      throw new Error(`${articlePath}[${index}].url must be a Zhihu URL.`);
+    if (!isZhihuUrl(item.url)) {
+      throw new Error(`${articlePath}[${index}].url must be a Zhihu or Zhuanlan URL.`);
     }
 
     item.categoryIds.forEach((categoryId) => {
@@ -144,6 +144,10 @@ function requireArray(item, key, label) {
   if (!Array.isArray(item?.[key]) || item[key].some((value) => typeof value !== "string" || value.trim() === "")) {
     throw new Error(`${label}.${key} must be an array of non-empty strings.`);
   }
+}
+
+function isZhihuUrl(url) {
+  return url.startsWith("https://www.zhihu.com/") || url.startsWith("https://zhuanlan.zhihu.com/");
 }
 
 function visitCategories(items, path, visitor) {
