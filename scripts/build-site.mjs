@@ -1,7 +1,7 @@
 import { countCategoryNodes } from "./lib/category-tree.mjs";
 import { readJson, updateRegion } from "./lib/io.mjs";
 import { renderProjects } from "./lib/render-github.mjs";
-import { renderArticleSections, renderChapterNav, renderKnowledgeMap, renderTagFilters } from "./lib/render-zhihu.mjs";
+import { renderArticleSections, renderChapterNav } from "./lib/render-zhihu.mjs";
 import { validateArticles, validateCategoryTree, validateProjects } from "./lib/validators.mjs";
 
 const articlePath = "data/zhihu-articles.json";
@@ -30,16 +30,6 @@ const pageConfigs = [
         start: "<!-- CHAPTER_NAV:START -->",
         end: "<!-- CHAPTER_NAV:END -->",
         html: () => renderChapterNav(articleCategories),
-      },
-      {
-        start: "<!-- TAG_FILTERS:START -->",
-        end: "<!-- TAG_FILTERS:END -->",
-        html: () => renderTagFilters(articles),
-      },
-      {
-        start: "<!-- KNOWLEDGE_MAP:START -->",
-        end: "<!-- KNOWLEDGE_MAP:END -->",
-        html: () => renderKnowledgeMap(articleCategories, articles),
       },
     ],
   },
