@@ -1,0 +1,12 @@
+[
+  {
+    "id": "code-tool",
+    "label": "Code / Tool",
+    "description": "代码、工具、自动化和工程实践。"
+  },
+  {
+    "id": "math-physics",
+    "label": "Math / Physics",
+    "description": "数学、物理和相关学习笔记。"
+  }
+]

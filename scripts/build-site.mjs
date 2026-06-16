@@ -1,35 +1,54 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
 const articlePath = "data/zhihu-articles.json";
+const articleCategoryPath = "data/zhihu-categories.json";
 const projectPath = "data/github-projects.json";
 
 const pageConfigs = [
   {
     file: "zhihu.html",
-    start: "<!-- ARTICLES:START -->",
-    end: "<!-- ARTICLES:END -->",
-    render: renderArticles,
+    regions: [
+      {
+        start: "<!-- ARTICLE_CATEGORIES:START -->",
+        end: "<!-- ARTICLE_CATEGORIES:END -->",
+        html: () => renderCategoryFilters(articleCategories),
+      },
+      {
+        start: "<!-- ARTICLES:START -->",
+        end: "<!-- ARTICLES:END -->",
+        html: () => renderArticles(articles, articleCategoryMap),
+      },
+    ],
   },
   {
     file: "github.html",
-    start: "<!-- PROJECTS:START -->",
-    end: "<!-- PROJECTS:END -->",
-    render: renderProjects,
+    regions: [
+      {
+        start: "<!-- PROJECTS:START -->",
+        end: "<!-- PROJECTS:END -->",
+        html: () => renderProjects(projects),
+      },
+    ],
   },
 ];
 
 const articles = readJson(articlePath);
+const articleCategories = readJson(articleCategoryPath);
 const projects = readJson(projectPath);
+const articleCategoryMap = validateCategories(articleCategories, articleCategoryPath);
 
-validateArticles(articles);
+validateArticles(articles, articleCategoryMap);
 validateProjects(projects);
 
 for (const config of pageConfigs) {
-  const data = config.file === "zhihu.html" ? articles : projects;
-  updateRegion(config.file, config.start, config.end, config.render(data));
+  for (const region of config.regions) {
+    updateRegion(config.file, region.start, region.end, region.html());
+  }
 }
 
-console.log(`Generated ${articles.length} Zhihu article(s) and ${projects.length} GitHub project(s).`);
+console.log(
+  `Generated ${articles.length} Zhihu article(s), ${articleCategories.length} category filter(s), and ${projects.length} GitHub project(s).`,
+);
 
 function readJson(path) {
   try {
@@ -39,7 +58,28 @@ function readJson(path) {
   }
 }
 
-function validateArticles(items) {
+function validateCategories(items, path) {
+  if (!Array.isArray(items)) {
+    throw new Error(`${path} must contain an array.`);
+  }
+
+  const ids = new Map();
+  items.forEach((item, index) => {
+    requireId(item, "id", `${path}[${index}]`);
+    requireString(item, "label", `${path}[${index}]`);
+    requireString(item, "description", `${path}[${index}]`);
+
+    if (ids.has(item.id)) {
+      throw new Error(`${path}[${index}].id duplicates ${ids.get(item.id).source}.`);
+    }
+
+    ids.set(item.id, { ...item, source: `${path}[${index}]` });
+  });
+
+  return ids;
+}
+
+function validateArticles(items, categoryMap) {
   if (!Array.isArray(items)) {
     throw new Error(`${articlePath} must contain an array.`);
   }
@@ -50,10 +90,17 @@ function validateArticles(items) {
     requireString(item, "date", `${articlePath}[${index}]`);
     requireString(item, "summary", `${articlePath}[${index}]`);
     requireArray(item, "tags", `${articlePath}[${index}]`);
+    requireArray(item, "categoryIds", `${articlePath}[${index}]`);
 
     if (!item.url.startsWith("https://www.zhihu.com/")) {
       throw new Error(`${articlePath}[${index}].url must be a Zhihu URL.`);
     }
+
+    item.categoryIds.forEach((categoryId) => {
+      if (!categoryMap.has(categoryId)) {
+        throw new Error(`${articlePath}[${index}].categoryIds contains unknown category "${categoryId}".`);
+      }
+    });
   });
 }
 
@@ -78,6 +125,13 @@ function validateProjects(items) {
 function requireString(item, key, label) {
   if (typeof item?.[key] !== "string" || item[key].trim() === "") {
     throw new Error(`${label}.${key} must be a non-empty string.`);
+  }
+}
+
+function requireId(item, key, label) {
+  requireString(item, key, label);
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(item[key])) {
+    throw new Error(`${label}.${key} must be kebab-case lowercase text.`);
   }
 }
 
@@ -106,12 +160,30 @@ function updateRegion(file, start, end, html) {
   writeFileSync(file, next);
 }
 
-function renderArticles(items) {
+function renderCategoryFilters(items) {
+  const buttons = [
+    `        <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">
+          <strong>All</strong>
+          <span>全部文章</span>
+        </button>`,
+    ...items.map(
+      (item) => `        <button class="filter-button" type="button" data-filter="${escapeAttribute(item.id)}" aria-pressed="false">
+          <strong>${escapeHtml(item.label)}</strong>
+          <span>${escapeHtml(item.description)}</span>
+        </button>`,
+    ),
+  ];
+
+  return buttons.join("\n");
+}
+
+function renderArticles(items, categoryMap) {
   return items
     .map((item) => {
       const tags = item.tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
-      return `        <article class="content-card article-card">
-          <div class="card-meta">${escapeHtml(item.date)} · Zhihu</div>
+      const categoryNames = item.categoryIds.map((categoryId) => categoryMap.get(categoryId).label);
+      return `        <article class="content-card article-card" data-categories="${escapeAttribute(item.categoryIds.join(" "))}">
+          <div class="card-meta">${escapeHtml(item.date)} · ${escapeHtml(categoryNames.join(" / "))}</div>
           <h2>${escapeHtml(item.title)}</h2>
           <p>${escapeHtml(item.summary)}</p>
           <div class="tag-row">${tags}</div>
