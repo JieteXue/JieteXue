@@ -7,11 +7,7 @@ on:
     paths:
       - "data/**"
       - "scripts/build-site.mjs"
-      - "assets/zhihu.css"
-      - "assets/zhihu.js"
-      - "index.html"
-      - "zhihu.html"
-      - "github.html"
+      - "docs/**"
       - ".github/workflows/site.yml"
   workflow_dispatch:
 
@@ -39,6 +35,6 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add zhihu.html github.html
+          git add docs/zhihu.html docs/github.html
           git commit -m "Generate site pages"
           git push

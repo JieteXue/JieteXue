@@ -6,7 +6,7 @@ const projectPath = "data/github-projects.json";
 
 const pageConfigs = [
   {
-    file: "zhihu.html",
+    file: "docs/zhihu.html",
     regions: [
       {
         start: "<!-- ARTICLE_SECTIONS:START -->",
@@ -21,7 +21,7 @@ const pageConfigs = [
     ],
   },
   {
-    file: "github.html",
+    file: "docs/github.html",
     regions: [
       {
         start: "<!-- PROJECTS:START -->",
