@@ -34,7 +34,7 @@ ${renderChildLinks(children)}
   const body =
     categoryArticles.length === 0
       ? `            <p class="section-empty">${emptyText}</p>`
-      : `            <div class="article-grid">
+      : `            <div class="article-list">
 ${renderArticleCards(categoryArticles, seriesMap)}
             </div>`;
 
@@ -79,12 +79,16 @@ function renderArticleCards(items, seriesMap) {
       const series = item.seriesId ? seriesMap.get(item.seriesId) : undefined;
       const metaParts = [item.date, series?.label, "Zhihu Article"].filter(Boolean).map(escapeHtml);
       const meta = metaParts.join(" · ");
-      return `              <article class="content-card article-card">
-                <div class="card-meta">${meta}</div>
-                <h3>${escapeHtml(item.title)}</h3>
-                <p>${escapeHtml(item.summary)}</p>
-                <div class="tag-row">${tags}</div>
-                <a class="button-link" href="${escapeAttribute(item.url)}" target="_blank" rel="noreferrer">阅读知乎原文</a>
+      return `              <article class="article-item">
+                <div>
+                  <div class="item-meta">${meta}</div>
+                  <h3>${escapeHtml(item.title)}</h3>
+                  <p>${escapeHtml(item.summary)}</p>
+                  <div class="tag-row">${tags}</div>
+                </div>
+                <div class="article-actions">
+                  <a class="button-link" href="${escapeAttribute(item.url)}" target="_blank" rel="noreferrer">原文</a>
+                </div>
               </article>`;
     })
     .join("\n");

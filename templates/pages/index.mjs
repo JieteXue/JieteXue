@@ -1,32 +1,14 @@
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="dark" />
-    <title>JieteXue · Personal Blog</title>
-    <meta name="description" content="JieteXue 的个人博客入口，连接知乎文章、GitHub 项目和学习笔记。" />
-    <link rel="stylesheet" href="./assets/site.css" />
-    <link rel="prefetch" href="./zhihu.html" as="document" />
-    <link rel="prefetch" href="./github.html" as="document" />
-  </head>
-  <body>
-    <header class="topbar">
-      <div class="site-shell topbar-inner">
-        <a class="brand" href="./index.html" aria-label="JieteXue home">
-          <span class="mark">JX</span>
-          <span>JieteXue</span>
-        </a>
-        <nav class="nav" aria-label="Primary navigation">
-          <a href="./index.html" aria-current="page">Home</a>
-          <a href="./zhihu.html">Zhihu</a>
-          <a href="./github.html">GitHub</a>
-          <a href="https://www.zhihu.com/people/7-63-5-13-42" target="_blank" rel="noreferrer">Profile</a>
-        </nav>
-      </div>
-    </header>
+import { renderLayout } from "../layout.mjs";
 
-    <main class="site-shell">
+export function renderIndexPage() {
+  return renderLayout({
+    active: "home",
+    title: "JieteXue · Personal Blog",
+    description: "JieteXue 的个人博客入口，连接知乎文章、GitHub 项目和学习笔记。",
+    head: `    <link rel="prefetch" href="./zhihu.html" as="document" />
+    <link rel="prefetch" href="./github.html" as="document" />`,
+    footer: "Built for GitHub Pages · Updated from structured data files.",
+    main: `    <main class="site-shell">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
           <div>
@@ -96,10 +78,6 @@
           <span>Open profile repo</span>
         </a>
       </section>
-    </main>
-
-    <footer class="footer">
-      <div class="site-shell">Built for GitHub Pages · Updated from structured data files.</div>
-    </footer>
-  </body>
-</html>
+    </main>`,
+  });
+}
