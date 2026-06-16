@@ -92,10 +92,13 @@ function validateArticles(items, categoryMap) {
   items.forEach((item, index) => {
     requireString(item, "title", `${articlePath}[${index}]`);
     requireString(item, "url", `${articlePath}[${index}]`);
-    requireString(item, "date", `${articlePath}[${index}]`);
     requireString(item, "summary", `${articlePath}[${index}]`);
     requireArray(item, "tags", `${articlePath}[${index}]`);
     requireArray(item, "categoryIds", `${articlePath}[${index}]`);
+
+    if (item.date !== undefined && (typeof item.date !== "string" || item.date.trim() === "")) {
+      throw new Error(`${articlePath}[${index}].date must be omitted or a non-empty string.`);
+    }
 
     if (!isZhihuUrl(item.url)) {
       throw new Error(`${articlePath}[${index}].url must be a Zhihu or Zhuanlan URL.`);
@@ -206,9 +209,14 @@ function renderChapterNavItems(categories, depth, state) {
 
 function renderCategorySection(category, items, depth) {
   const categoryArticles = items.filter((item) => item.categoryIds.includes(category.id));
+  const children = category.children ?? [];
   const headingTag = `h${Math.min(depth + 1, 6)}`;
   const eyebrow = getCategoryLevelLabel(depth);
   const emptyText = depth === 1 ? "这个章节暂时还没有文章。" : "这个主题暂时还没有文章。";
+  const childTree = children.length === 0 ? "" : `            <div class="child-tree">
+${renderChildLinks(children)}
+            </div>
+`;
   const body =
     categoryArticles.length === 0
       ? `            <p class="section-empty">${emptyText}</p>`
@@ -222,8 +230,20 @@ ${renderArticleCards(categoryArticles)}
               <${headingTag}>${escapeHtml(category.label)}</${headingTag}>
               <p>${escapeHtml(category.description)}</p>
             </div>
+${childTree}
 ${body}
           </section>`;
+}
+
+function renderChildLinks(categories) {
+  return categories
+    .map((category) => {
+      return `              <a class="child-link" href="#${escapeAttribute(category.id)}">
+                <strong>${escapeHtml(category.label)}</strong>
+                <span>${escapeHtml(category.description)}</span>
+              </a>`;
+    })
+    .join("\n");
 }
 
 function flattenCategories(categories, depth = 1) {
@@ -249,13 +269,14 @@ function renderArticleCards(items) {
   return items
     .map((item) => {
       const tags = item.tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
-      return `            <article class="content-card article-card">
-              <div class="card-meta">${escapeHtml(item.date)} · Zhihu</div>
-              <h3>${escapeHtml(item.title)}</h3>
-              <p>${escapeHtml(item.summary)}</p>
-              <div class="tag-row">${tags}</div>
-              <a class="button-link" href="${escapeAttribute(item.url)}" target="_blank" rel="noreferrer">阅读知乎原文</a>
-            </article>`;
+      const meta = item.date ? `${escapeHtml(item.date)} · Zhihu` : "Zhihu Article";
+      return `              <article class="content-card article-card">
+                <div class="card-meta">${meta}</div>
+                <h3>${escapeHtml(item.title)}</h3>
+                <p>${escapeHtml(item.summary)}</p>
+                <div class="tag-row">${tags}</div>
+                <a class="button-link" href="${escapeAttribute(item.url)}" target="_blank" rel="noreferrer">阅读知乎原文</a>
+              </article>`;
     })
     .join("\n");
 }
