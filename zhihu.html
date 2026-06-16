@@ -38,22 +38,40 @@
       <div class="reading-layout">
         <div class="reading-main">
 <!-- ARTICLE_SECTIONS:START -->
-          <section class="article-section" id="code-tool" data-section>
+          <section class="article-section" id="code-tool" data-section data-depth="1" style="--depth: 0">
             <div class="section-heading">
-              <p class="eyebrow">Chapter</p>
+              <p class="eyebrow">Section</p>
               <h2>Code / Tool</h2>
               <p>代码、工具、自动化和工程实践。</p>
             </div>
             <p class="section-empty">这个章节暂时还没有文章。</p>
           </section>
 
-          <section class="article-section" id="math-physics" data-section>
+          <section class="article-section" id="math-physics" data-section data-depth="1" style="--depth: 0">
             <div class="section-heading">
-              <p class="eyebrow">Chapter</p>
+              <p class="eyebrow">Section</p>
               <h2>Math / Physics</h2>
               <p>数学、物理和相关学习笔记。</p>
             </div>
             <p class="section-empty">这个章节暂时还没有文章。</p>
+          </section>
+
+          <section class="article-section" id="math" data-section data-depth="2" style="--depth: 1">
+            <div class="section-heading">
+              <p class="eyebrow">Subsection</p>
+              <h3>Math</h3>
+              <p>数学主题、证明、结构和问题整理。</p>
+            </div>
+            <p class="section-empty">这个主题暂时还没有文章。</p>
+          </section>
+
+          <section class="article-section" id="physics" data-section data-depth="2" style="--depth: 1">
+            <div class="section-heading">
+              <p class="eyebrow">Subsection</p>
+              <h3>Physics</h3>
+              <p>物理直觉、模型、公式和推导笔记。</p>
+            </div>
+            <p class="section-empty">这个主题暂时还没有文章。</p>
           </section>
 <!-- ARTICLE_SECTIONS:END -->
         </div>
@@ -61,8 +79,10 @@
         <aside class="chapter-nav" aria-label="Zhihu chapter navigation">
           <p>目录</p>
 <!-- CHAPTER_NAV:START -->
-          <a class="is-active" href="#code-tool">Code / Tool</a>
-          <a href="#math-physics">Math / Physics</a>
+          <a class="chapter-link is-active" style="--depth: 0" href="#code-tool">Code / Tool</a>
+          <a class="chapter-link" style="--depth: 0" href="#math-physics">Math / Physics</a>
+          <a class="chapter-link" style="--depth: 1" href="#math">Math</a>
+          <a class="chapter-link" style="--depth: 1" href="#physics">Physics</a>
 <!-- CHAPTER_NAV:END -->
         </aside>
       </div>

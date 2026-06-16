@@ -35,7 +35,8 @@ const pageConfigs = [
 const articles = readJson(articlePath);
 const articleCategories = readJson(articleCategoryPath);
 const projects = readJson(projectPath);
-const articleCategoryMap = validateCategories(articleCategories, articleCategoryPath);
+const articleCategoryMap = validateCategoryTree(articleCategories, articleCategoryPath);
+const articleCategoryCount = countCategoryNodes(articleCategories);
 
 validateArticles(articles, articleCategoryMap);
 validateProjects(projects);
@@ -47,7 +48,7 @@ for (const config of pageConfigs) {
 }
 
 console.log(
-  `Generated ${articles.length} Zhihu article(s), ${articleCategories.length} chapter(s), and ${projects.length} GitHub project(s).`,
+  `Generated ${articles.length} Zhihu article(s), ${articleCategoryCount} category node(s), and ${projects.length} GitHub project(s).`,
 );
 
 function readJson(path) {
@@ -58,22 +59,26 @@ function readJson(path) {
   }
 }
 
-function validateCategories(items, path) {
+function validateCategoryTree(items, path) {
   if (!Array.isArray(items)) {
     throw new Error(`${path} must contain an array.`);
   }
 
   const ids = new Map();
-  items.forEach((item, index) => {
-    requireId(item, "id", `${path}[${index}]`);
-    requireString(item, "label", `${path}[${index}]`);
-    requireString(item, "description", `${path}[${index}]`);
+  visitCategories(items, path, (item, label) => {
+    requireId(item, "id", label);
+    requireString(item, "label", label);
+    requireString(item, "description", label);
 
-    if (ids.has(item.id)) {
-      throw new Error(`${path}[${index}].id duplicates ${ids.get(item.id).source}.`);
+    if (item.children !== undefined && !Array.isArray(item.children)) {
+      throw new Error(`${label}.children must be an array when present.`);
     }
 
-    ids.set(item.id, { ...item, source: `${path}[${index}]` });
+    if (ids.has(item.id)) {
+      throw new Error(`${label}.id duplicates ${ids.get(item.id).source}.`);
+    }
+
+    ids.set(item.id, { ...item, source: label });
   });
 
   return ids;
@@ -141,6 +146,21 @@ function requireArray(item, key, label) {
   }
 }
 
+function visitCategories(items, path, visitor) {
+  items.forEach((item, index) => {
+    const label = `${path}[${index}]`;
+    visitor(item, label);
+
+    if (Array.isArray(item.children)) {
+      visitCategories(item.children, `${label}.children`, visitor);
+    }
+  });
+}
+
+function countCategoryNodes(items) {
+  return items.reduce((count, item) => count + 1 + countCategoryNodes(item.children ?? []), 0);
+}
+
 function updateRegion(file, start, end, html) {
   const source = readFileSync(file, "utf8");
   const startIndex = source.indexOf(start);
@@ -161,35 +181,64 @@ function updateRegion(file, start, end, html) {
 }
 
 function renderChapterNav(categories) {
-  const links = categories.map((category, index) => {
-    const activeClass = index === 0 ? ` class="is-active"` : "";
-    return `          <a${activeClass} href="#${escapeAttribute(category.id)}">${escapeHtml(category.label)}</a>`;
-  });
-
-  return links.join("\n");
+  return renderChapterNavItems(categories, 0, { isFirst: true });
 }
 
 function renderArticleSections(categories, items) {
+  return flattenCategories(categories).map((entry) => renderCategorySection(entry.category, items, entry.depth)).join("\n\n");
+}
+
+function renderChapterNavItems(categories, depth, state) {
   return categories
     .map((category) => {
-      const categoryArticles = items.filter((item) => item.categoryIds.includes(category.id));
-      const body =
-        categoryArticles.length === 0
-          ? `            <p class="section-empty">这个章节暂时还没有文章。</p>`
-          : `          <div class="article-grid">
-${renderArticleCards(categoryArticles)}
-          </div>`;
+      const activeClass = state.isFirst ? " is-active" : "";
+      state.isFirst = false;
+      const current = `          <a class="chapter-link${activeClass}" style="--depth: ${depth}" href="#${escapeAttribute(category.id)}">${escapeHtml(category.label)}</a>`;
+      const children = renderChapterNavItems(category.children ?? [], depth + 1, state);
+      return children ? `${current}\n${children}` : current;
+    })
+    .join("\n");
+}
 
-      return `          <section class="article-section" id="${escapeAttribute(category.id)}" data-section>
+function renderCategorySection(category, items, depth) {
+  const categoryArticles = items.filter((item) => item.categoryIds.includes(category.id));
+  const headingTag = `h${Math.min(depth + 1, 6)}`;
+  const eyebrow = getCategoryLevelLabel(depth);
+  const emptyText = depth === 1 ? "这个章节暂时还没有文章。" : "这个主题暂时还没有文章。";
+  const body =
+    categoryArticles.length === 0
+      ? `            <p class="section-empty">${emptyText}</p>`
+      : `            <div class="article-grid">
+${renderArticleCards(categoryArticles)}
+            </div>`;
+
+  return `          <section class="article-section" id="${escapeAttribute(category.id)}" data-section data-depth="${depth}" style="--depth: ${depth - 1}">
             <div class="section-heading">
-              <p class="eyebrow">Chapter</p>
-              <h2>${escapeHtml(category.label)}</h2>
+              <p class="eyebrow">${eyebrow}</p>
+              <${headingTag}>${escapeHtml(category.label)}</${headingTag}>
               <p>${escapeHtml(category.description)}</p>
             </div>
 ${body}
           </section>`;
-    })
-    .join("\n\n");
+}
+
+function flattenCategories(categories, depth = 1) {
+  return categories.flatMap((category) => [
+    { category, depth },
+    ...flattenCategories(category.children ?? [], depth + 1),
+  ]);
+}
+
+function getCategoryLevelLabel(depth) {
+  if (depth === 1) {
+    return "Section";
+  }
+
+  if (depth === 2) {
+    return "Subsection";
+  }
+
+  return "Topic";
 }
 
 function renderArticleCards(items) {
