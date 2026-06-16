@@ -31,30 +31,12 @@
         <p class="eyebrow">Published on Zhihu</p>
         <h1 id="page-title">知乎文章</h1>
         <p class="lead">
-          这里按章节整理已经发表在知乎上的文章；知乎主页等入口不会混进文章列表。分类、入口和文章都由 JSON 数据控制。
+          这里按章节整理已经发表在知乎上的文章。分类由 JSON 控制，文章只在所属章节里展示。
         </p>
       </section>
 
       <div class="reading-layout">
         <div class="reading-main">
-          <section class="resource-section" id="zhihu-links" data-section>
-            <div class="section-heading">
-              <p class="eyebrow">Links</p>
-              <h2>知乎入口</h2>
-              <p>不属于具体文章分类的主页、专栏或合集入口放在这里。</p>
-            </div>
-            <div class="resource-grid">
-<!-- RESOURCE_LINKS:START -->
-              <article class="content-card resource-card">
-                <div class="card-meta">Zhihu Link</div>
-                <h3>知乎主页</h3>
-                <p>知乎个人主页和所有动态入口。</p>
-                <a class="button-link" href="https://www.zhihu.com/people/7-63-5-13-42/posts" target="_blank" rel="noreferrer">打开入口</a>
-              </article>
-<!-- RESOURCE_LINKS:END -->
-            </div>
-          </section>
-
 <!-- ARTICLE_SECTIONS:START -->
           <section class="article-section" id="code-tool" data-section>
             <div class="section-heading">
@@ -79,8 +61,7 @@
         <aside class="chapter-nav" aria-label="Zhihu chapter navigation">
           <p>目录</p>
 <!-- CHAPTER_NAV:START -->
-          <a class="is-active" href="#zhihu-links">知乎入口</a>
-          <a href="#code-tool">Code / Tool</a>
+          <a class="is-active" href="#code-tool">Code / Tool</a>
           <a href="#math-physics">Math / Physics</a>
 <!-- CHAPTER_NAV:END -->
         </aside>
@@ -88,7 +69,7 @@
     </main>
 
     <footer class="footer">
-      <div class="site-shell">Zhihu page is generated from JSON data files.</div>
+      <div class="site-shell">Zhihu chapters are generated from JSON data files.</div>
     </footer>
   </body>
 </html>

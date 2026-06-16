@@ -174,7 +174,6 @@ h1 {
   background: rgba(47, 129, 247, 0.12);
 }
 
-.resource-section,
 .article-section {
   scroll-margin-top: 92px;
 }
@@ -197,7 +196,6 @@ h1 {
   line-height: 1.65;
 }
 
-.resource-grid,
 .article-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -215,10 +213,6 @@ h1 {
   padding: 22px;
   background: rgba(13, 17, 23, 0.9);
   box-shadow: 0 22px 80px rgba(0, 0, 0, 0.28);
-}
-
-.resource-card {
-  min-height: 180px;
 }
 
 .card-meta {
@@ -299,7 +293,6 @@ h1 {
 
 @media (max-width: 760px) {
   .topbar-inner,
-  .resource-grid,
   .article-grid {
     grid-template-columns: 1fr;
   }

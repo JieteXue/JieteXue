@@ -2,18 +2,12 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 const articlePath = "data/zhihu-articles.json";
 const articleCategoryPath = "data/zhihu-categories.json";
-const articleResourcePath = "data/zhihu-resources.json";
 const projectPath = "data/github-projects.json";
 
 const pageConfigs = [
   {
     file: "zhihu.html",
     regions: [
-      {
-        start: "<!-- RESOURCE_LINKS:START -->",
-        end: "<!-- RESOURCE_LINKS:END -->",
-        html: () => renderResourceLinks(articleResources),
-      },
       {
         start: "<!-- ARTICLE_SECTIONS:START -->",
         end: "<!-- ARTICLE_SECTIONS:END -->",
@@ -40,12 +34,10 @@ const pageConfigs = [
 
 const articles = readJson(articlePath);
 const articleCategories = readJson(articleCategoryPath);
-const articleResources = readJson(articleResourcePath);
 const projects = readJson(projectPath);
 const articleCategoryMap = validateCategories(articleCategories, articleCategoryPath);
 
 validateArticles(articles, articleCategoryMap);
-validateResources(articleResources, articleResourcePath);
 validateProjects(projects);
 
 for (const config of pageConfigs) {
@@ -55,7 +47,7 @@ for (const config of pageConfigs) {
 }
 
 console.log(
-  `Generated ${articles.length} Zhihu article(s), ${articleResources.length} resource link(s), ${articleCategories.length} chapter(s), and ${projects.length} GitHub project(s).`,
+  `Generated ${articles.length} Zhihu article(s), ${articleCategories.length} chapter(s), and ${projects.length} GitHub project(s).`,
 );
 
 function readJson(path) {
@@ -109,22 +101,6 @@ function validateArticles(items, categoryMap) {
         throw new Error(`${articlePath}[${index}].categoryIds contains unknown category "${categoryId}".`);
       }
     });
-  });
-}
-
-function validateResources(items, path) {
-  if (!Array.isArray(items)) {
-    throw new Error(`${path} must contain an array.`);
-  }
-
-  items.forEach((item, index) => {
-    requireString(item, "title", `${path}[${index}]`);
-    requireString(item, "url", `${path}[${index}]`);
-    requireString(item, "summary", `${path}[${index}]`);
-
-    if (!item.url.startsWith("https://www.zhihu.com/")) {
-      throw new Error(`${path}[${index}].url must be a Zhihu URL.`);
-    }
   });
 }
 
@@ -184,28 +160,11 @@ function updateRegion(file, start, end, html) {
   writeFileSync(file, next);
 }
 
-function renderResourceLinks(items) {
-  if (items.length === 0) {
-    return `              <p class="section-empty">暂时没有单独入口。</p>`;
-  }
-
-  return items
-    .map((item) => {
-      return `              <article class="content-card resource-card">
-                <div class="card-meta">Zhihu Link</div>
-                <h3>${escapeHtml(item.title)}</h3>
-                <p>${escapeHtml(item.summary)}</p>
-                <a class="button-link" href="${escapeAttribute(item.url)}" target="_blank" rel="noreferrer">打开入口</a>
-              </article>`;
-    })
-    .join("\n");
-}
-
 function renderChapterNav(categories) {
-  const links = [
-    `          <a class="is-active" href="#zhihu-links">知乎入口</a>`,
-    ...categories.map((category) => `          <a href="#${escapeAttribute(category.id)}">${escapeHtml(category.label)}</a>`),
-  ];
+  const links = categories.map((category, index) => {
+    const activeClass = index === 0 ? ` class="is-active"` : "";
+    return `          <a${activeClass} href="#${escapeAttribute(category.id)}">${escapeHtml(category.label)}</a>`;
+  });
 
   return links.join("\n");
 }
