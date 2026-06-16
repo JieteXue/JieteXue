@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>JieteXue · Zhihu Articles</title>
+    <meta name="description" content="JieteXue 发表在知乎上的文章展示页。" />
+    <link rel="prefetch" href="./github.html" as="document" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #05080f;
+        --panel: #0d1117;
+        --panel-2: #111827;
+        --line: #273244;
+        --text: #e6edf3;
+        --muted: #8b949e;
+        --blue: #2f81f7;
+        --cyan: #39c5cf;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 12% 4%, rgba(47, 129, 247, 0.18), transparent 30rem),
+          radial-gradient(circle at 88% 12%, rgba(57, 197, 207, 0.12), transparent 28rem),
+          #05080f;
+        color: var(--text);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .site-shell {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(18px);
+        background: rgba(5, 8, 15, 0.78);
+        border-bottom: 1px solid rgba(39, 50, 68, 0.74);
+      }
+
+      .topbar-inner {
+        min-height: 68px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+      }
+
+      .mark {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border: 1px solid rgba(57, 197, 207, 0.5);
+        border-radius: 8px;
+        background: #0d1117;
+        color: var(--cyan);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      .nav {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .nav a {
+        min-height: 38px;
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        padding: 0 12px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .nav a:hover,
+      .nav a[aria-current="page"] {
+        color: var(--text);
+        border-color: var(--line);
+        background: rgba(13, 17, 23, 0.9);
+      }
+
+      .page-head {
+        padding: 52px 0 24px;
+      }
+
+      .eyebrow {
+        margin: 0 0 14px;
+        color: var(--cyan);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(38px, 6vw, 68px);
+        line-height: 1;
+      }
+
+      .lead {
+        max-width: 720px;
+        margin: 18px 0 0;
+        color: #b7c2cf;
+        font-size: 17px;
+        line-height: 1.72;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        padding: 12px 0 58px;
+      }
+
+      .content-card {
+        display: flex;
+        min-height: 260px;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 22px;
+        background: rgba(13, 17, 23, 0.9);
+        box-shadow: 0 22px 80px rgba(0, 0, 0, 0.28);
+      }
+
+      .card-meta {
+        color: var(--cyan);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      .content-card h2 {
+        margin: 14px 0 0;
+        font-size: 24px;
+        line-height: 1.22;
+      }
+
+      .content-card p {
+        margin: 12px 0 18px;
+        color: var(--muted);
+        line-height: 1.68;
+      }
+
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0 0 20px;
+      }
+
+      .tag-row span {
+        border: 1px solid rgba(47, 129, 247, 0.38);
+        border-radius: 999px;
+        padding: 6px 10px;
+        color: #b7d7ff;
+        background: rgba(47, 129, 247, 0.12);
+        font-size: 12px;
+      }
+
+      .button-link {
+        min-height: 42px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        align-self: flex-start;
+        border: 1px solid rgba(47, 129, 247, 0.75);
+        border-radius: 8px;
+        padding: 0 14px;
+        background: #1f6feb;
+        color: white;
+        font-weight: 700;
+      }
+
+      .footer {
+        border-top: 1px solid var(--line);
+        padding: 28px 0 36px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      @media (max-width: 760px) {
+        .topbar-inner,
+        .content-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar-inner {
+          align-items: flex-start;
+          padding: 14px 0;
+        }
+
+        .content-card {
+          min-height: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="site-shell topbar-inner">
+        <a class="brand" href="./index.html" aria-label="JieteXue home">
+          <span class="mark">JX</span>
+          <span>JieteXue</span>
+        </a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="./index.html">Home</a>
+          <a href="./zhihu.html" aria-current="page">Zhihu</a>
+          <a href="./github.html">GitHub</a>
+          <a href="https://www.zhihu.com/people/7-63-5-13-42" target="_blank" rel="noreferrer">Profile</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="site-shell">
+      <section class="page-head" aria-labelledby="page-title">
+        <p class="eyebrow">Published on Zhihu</p>
+        <h1 id="page-title">知乎文章</h1>
+        <p class="lead">
+          这里集中放已经发表在知乎上的文章。以后只需要维护 <code>data/zhihu-articles.json</code>，自动化会更新这个展示页。
+        </p>
+      </section>
+
+      <section class="content-grid" aria-label="Zhihu articles">
+<!-- ARTICLES:START -->
+        <article class="content-card article-card">
+          <div class="card-meta">2026-06-16 · Zhihu</div>
+          <h2>知乎文章展示位</h2>
+          <p>把已经发表在知乎上的文章链接维护在这个文件里，自动化会把它们渲染到知乎文章页。</p>
+          <div class="tag-row"><span>Zhihu</span><span>Writing</span><span>Notes</span></div>
+          <a class="button-link" href="https://www.zhihu.com/people/7-63-5-13-42/posts" target="_blank" rel="noreferrer">阅读知乎原文</a>
+        </article>
+<!-- ARTICLES:END -->
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="site-shell">Zhihu article list is generated from data/zhihu-articles.json.</div>
+    </footer>
+  </body>
+</html>

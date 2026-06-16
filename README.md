@@ -45,6 +45,18 @@
 </p>
 
 <p align="center">
+  <a href="https://jietexue.github.io/JieteXue/">
+    <img src="https://img.shields.io/badge/Personal%20Blog-0D1117?style=for-the-badge&logo=githubpages&logoColor=white&labelColor=2F81F7" alt="Personal blog" />
+  </a>
+  <a href="https://jietexue.github.io/JieteXue/zhihu.html">
+    <img src="https://img.shields.io/badge/Zhihu%20Articles-0084FF?style=for-the-badge&logo=zhihu&logoColor=white" alt="Zhihu articles" />
+  </a>
+  <a href="https://jietexue.github.io/JieteXue/github.html">
+    <img src="https://img.shields.io/badge/GitHub%20Projects-111827?style=for-the-badge&logo=github&logoColor=white" alt="GitHub projects" />
+  </a>
+</p>
+
+<p align="center">
   <img
     width="825"
     src="/assets/current-focus.svg"
