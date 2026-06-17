@@ -33,9 +33,13 @@ ${renderPrimaryLinks(profile.primaryLinks)}
             </div>
           </div>
         </div>
+      </section>
 
-        <aside class="dashboard" aria-label="Current dashboard">
+      <section class="profile-grid" aria-label="Profile details">
+        <div class="profile-main">
 ${renderTimeline(profile.timeline)}
+        </div>
+        <aside class="dashboard" aria-label="Current profile blocks">
 ${renderProfileBlocks(profile.blocks)}
           <section class="panel status-grid" aria-label="Site metrics">
             <div class="metric">
