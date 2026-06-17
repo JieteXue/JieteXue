@@ -368,6 +368,7 @@ h1 {
   font-size: 13px;
 }
 
+.graph-console,
 .command-center,
 .route-console,
 .profile-console,
@@ -380,6 +381,11 @@ h1 {
 
 .command-center {
   grid-template-columns: minmax(0, 1fr) 320px;
+  align-items: stretch;
+}
+
+.graph-console {
+  grid-template-columns: minmax(0, 1fr) 300px;
   align-items: stretch;
 }
 
@@ -426,6 +432,8 @@ h1 {
   font-weight: 700;
 }
 
+.graph-panel,
+.graph-detail,
 .mission-panel,
 .command-rail,
 .route-console a,
@@ -434,6 +442,101 @@ h1 {
   border-radius: 8px;
   background: rgba(13, 17, 23, 0.88);
   box-shadow: var(--shadow);
+}
+
+.graph-panel {
+  min-height: 560px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.graph-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+  padding: 18px 20px;
+}
+
+.graph-toolbar h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.graph-toolbar .eyebrow {
+  margin-bottom: 8px;
+}
+
+.graph-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.graph-actions button {
+  min-height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 12px;
+  color: var(--text);
+  background: #161b22;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.graph-actions button:hover,
+.graph-actions button[aria-pressed="true"] {
+  border-color: rgba(57, 197, 207, 0.62);
+  background: rgba(57, 197, 207, 0.13);
+}
+
+.site-map-network {
+  min-height: 480px;
+  background:
+    linear-gradient(rgba(39, 50, 68, 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(39, 50, 68, 0.25) 1px, transparent 1px),
+    rgba(5, 8, 15, 0.32);
+  background-size: 28px 28px;
+}
+
+.site-map-network .vis-navigation .vis-button {
+  background-color: rgba(13, 17, 23, 0.82);
+  border: 1px solid rgba(39, 50, 68, 0.82);
+  border-radius: 8px;
+}
+
+.graph-detail {
+  display: grid;
+  align-content: start;
+  padding: 22px;
+}
+
+.graph-detail h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.graph-detail p:not(.eyebrow) {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.62;
+}
+
+.graph-detail a {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: start;
+  margin-top: 18px;
+  border: 1px solid rgba(47, 129, 247, 0.75);
+  border-radius: 8px;
+  padding: 0 12px;
+  background: #1f6feb;
+  color: white;
+  font-weight: 700;
 }
 
 .mission-panel {
@@ -862,6 +965,7 @@ h1 {
 }
 
 @media (max-width: 900px) {
+  .graph-console,
   .command-center {
     grid-template-columns: 1fr;
   }
@@ -892,6 +996,7 @@ h1 {
 @media (max-width: 820px) {
   .topbar-inner,
   .dashboard-hero,
+  .graph-toolbar,
   .route-console,
   .profile-console,
   .split-head,
@@ -910,6 +1015,10 @@ h1 {
   .dashboard-hero {
     align-items: start;
     padding-top: 28px;
+  }
+
+  .graph-toolbar {
+    align-items: start;
   }
 }
 

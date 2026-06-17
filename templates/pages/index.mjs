@@ -1,13 +1,14 @@
 import { renderLayout } from "../layout.mjs";
 import { escapeAttribute, escapeHtml } from "../../scripts/lib/html.mjs";
 
-export function renderIndexPage(profile) {
+export function renderIndexPage(profile, siteMap) {
   return renderLayout({
     active: "home",
     title: `${profile.name} · Personal Blog`,
     description: profile.intro,
     head: `    <link rel="prefetch" href="./zhihu.html" as="document" />
-    <link rel="prefetch" href="./github.html" as="document" />`,
+    <link rel="prefetch" href="./github.html" as="document" />
+    <link rel="stylesheet" href="https://unpkg.com/vis-network@9.1.9/styles/vis-network.min.css" />`,
     footer: "Built for GitHub Pages · Updated from structured data files.",
     main: `    <main class="site-shell home-shell">
       <section class="dashboard-hero" aria-labelledby="hero-title">
@@ -19,6 +20,29 @@ export function renderIndexPage(profile) {
         </div>
         <aside class="dashboard-profile" aria-label="Profile summary">
 ${renderIntroDetails(profile.introDetails)}
+        </aside>
+      </section>
+
+      <section class="graph-console" aria-label="Interactive site map">
+        <div class="graph-panel">
+          <div class="graph-toolbar">
+            <div>
+              <p class="eyebrow">Interactive map</p>
+              <h2>知识与入口地图</h2>
+            </div>
+            <div class="graph-actions" aria-label="Map actions">
+              <button type="button" data-map-action="fit">Fit</button>
+              <button type="button" data-map-action="physics">Physics</button>
+            </div>
+          </div>
+          <div id="site-map-network" class="site-map-network" aria-label="Draggable and zoomable site map"></div>
+        </div>
+
+        <aside class="graph-detail" id="site-map-detail" aria-live="polite">
+          <p class="eyebrow">Selected node</p>
+          <h2>JieteXue</h2>
+          <p>拖拽节点、滚轮缩放，点击节点查看入口说明。</p>
+          <a href="./index.html">Open node</a>
         </aside>
       </section>
 
@@ -87,6 +111,9 @@ ${renderTagCloud(getBlockItems(profile.blocks, "interests"))}
 ${renderTimelinePreview(profile.timeline)}
         </div>
       </section>
+      <script type="application/json" id="site-map-data">${escapeJsonForScript(siteMap)}</script>
+      <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+      <script src="./assets/site-map.js"></script>
     </main>`,
   });
 }
@@ -106,26 +133,6 @@ ${items
   })
   .join("\n")}
             </dl>`;
-}
-
-function renderPrimaryLinks(items) {
-  return items
-    .map((item) => {
-      const className = item.style === "primary" ? "button primary" : "button";
-      const external = isExternalHref(item.href) ? ' target="_blank" rel="noreferrer"' : "";
-      return `              <a class="${className}" href="${escapeAttribute(item.href)}"${external}>${escapeHtml(item.label)}</a>`;
-    })
-    .join("\n");
-}
-
-function renderCompactItems(items = []) {
-  if (items.length === 0) {
-    return "";
-  }
-
-  return `          <ul class="compact-list">
-${items.map((item) => `            <li>${escapeHtml(item)}</li>`).join("\n")}
-          </ul>`;
 }
 
 function renderTagCloud(items = []) {
@@ -172,6 +179,6 @@ function getBlockItems(blocks, id) {
   return getBlock(blocks, id)?.items ?? [];
 }
 
-function isExternalHref(href) {
-  return href.startsWith("http://") || href.startsWith("https://");
+function escapeJsonForScript(value) {
+  return JSON.stringify(value).replaceAll("<", "\\u003c").replaceAll(">", "\\u003e").replaceAll("&", "\\u0026");
 }

@@ -18,11 +18,13 @@ GitHub Pages is expected to publish from the repository `main` branch and `/docs
 - `../data/zhihu-articles.json`: article records. `tags` are horizontal labels; `categoryIds` place articles into the smallest relevant chapters; `seriesId` optionally connects an article to a reading path.
 - `../data/github-projects.json`: selected GitHub projects shown on `github.html`.
 - `../data/profile.json`: home page profile content, including hero text, primary links, and personal information blocks.
+- `../data/site-map.json`: home page interactive node map data. The rendering uses the existing `vis-network` library; edit nodes and edges here instead of hand-writing graph markup.
 
 ## Maintenance
 
 - Add a Zhihu article in `../data/zhihu-articles.json`, then run `node scripts/build-site.mjs` from the repository root.
 - Edit home page personal sections in `../data/profile.json`; hero details live in `introDetails`, resume-like records live in `timeline`, and content blocks support `title`, `eyebrow`, `body`, `items`, and optional `links`.
+- Edit the home page draggable/zoomable map in `../data/site-map.json`; each node needs `id`, `label`, `type`, `description`, `href`, `x`, and `y`, and each edge connects existing node IDs with `from` and `to`.
 - Add a category in `../data/zhihu-categories.json`; use the smallest relevant category ID in each article's `categoryIds`.
 - Add a reading path in `../data/zhihu-series.json`; connect articles with `seriesId`.
 - Do not guess article dates. Omit `date` unless the date is known.

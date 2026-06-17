@@ -2,7 +2,7 @@ import { countCategoryNodes } from "./lib/category-tree.mjs";
 import { readJson, writeText } from "./lib/io.mjs";
 import { renderProjects } from "./lib/render-github.mjs";
 import { renderArticleSections, renderChapterNav } from "./lib/render-zhihu.mjs";
-import { validateArticles, validateCategoryTree, validateProfile, validateProjects, validateSeries } from "./lib/validators.mjs";
+import { validateArticles, validateCategoryTree, validateProfile, validateProjects, validateSeries, validateSiteMap } from "./lib/validators.mjs";
 import { renderGithubPage } from "../templates/pages/github.mjs";
 import { renderIndexPage } from "../templates/pages/index.mjs";
 import { renderZhihuPage } from "../templates/pages/zhihu.mjs";
@@ -12,12 +12,14 @@ const articleCategoryPath = "data/zhihu-categories.json";
 const articleSeriesPath = "data/zhihu-series.json";
 const profilePath = "data/profile.json";
 const projectPath = "data/github-projects.json";
+const siteMapPath = "data/site-map.json";
 
 const profile = readJson(profilePath);
 const articles = readJson(articlePath);
 const articleCategories = readJson(articleCategoryPath);
 const articleSeries = readJson(articleSeriesPath);
 const projects = readJson(projectPath);
+const siteMap = readJson(siteMapPath);
 const articleCategoryMap = validateCategoryTree(articleCategories, articleCategoryPath);
 const articleCategoryCount = countCategoryNodes(articleCategories);
 const articleSeriesMap = validateSeries(articleSeries, articleCategoryMap, articleSeriesPath);
@@ -25,8 +27,9 @@ const articleSeriesMap = validateSeries(articleSeries, articleCategoryMap, artic
 validateProfile(profile, profilePath);
 validateArticles(articles, articleCategoryMap, articleSeriesMap, articlePath);
 validateProjects(projects, projectPath);
+validateSiteMap(siteMap, siteMapPath);
 
-writeText("docs/index.html", renderIndexPage(profile));
+writeText("docs/index.html", renderIndexPage(profile, siteMap));
 writeText(
   "docs/zhihu.html",
   renderZhihuPage({

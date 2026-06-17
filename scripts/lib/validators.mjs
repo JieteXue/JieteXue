@@ -141,6 +141,50 @@ export function validateProjects(items, projectPath) {
   });
 }
 
+export function validateSiteMap(item, siteMapPath) {
+  const label = siteMapPath;
+  if (typeof item !== "object" || item === null || Array.isArray(item)) {
+    throw new Error(`${siteMapPath} must contain an object.`);
+  }
+
+  requireArrayObject(item, "nodes", label);
+  requireArrayObject(item, "edges", label);
+
+  const nodeIds = new Set();
+  item.nodes.forEach((node, index) => {
+    const nodeLabel = `${siteMapPath}.nodes[${index}]`;
+    requireId(node, "id", nodeLabel);
+    requireString(node, "label", nodeLabel);
+    requireString(node, "type", nodeLabel);
+    requireString(node, "description", nodeLabel);
+    requireString(node, "href", nodeLabel);
+
+    if (!isFiniteNumber(node.x) || !isFiniteNumber(node.y)) {
+      throw new Error(`${nodeLabel}.x and ${nodeLabel}.y must be numbers.`);
+    }
+
+    if (nodeIds.has(node.id)) {
+      throw new Error(`${nodeLabel}.id duplicates another site map node.`);
+    }
+
+    nodeIds.add(node.id);
+  });
+
+  item.edges.forEach((edge, index) => {
+    const edgeLabel = `${siteMapPath}.edges[${index}]`;
+    requireString(edge, "from", edgeLabel);
+    requireString(edge, "to", edgeLabel);
+
+    if (!nodeIds.has(edge.from)) {
+      throw new Error(`${edgeLabel}.from contains unknown node "${edge.from}".`);
+    }
+
+    if (!nodeIds.has(edge.to)) {
+      throw new Error(`${edgeLabel}.to contains unknown node "${edge.to}".`);
+    }
+  });
+}
+
 export function validateProfile(item, profilePath) {
   const label = profilePath;
   if (typeof item !== "object" || item === null || Array.isArray(item)) {
