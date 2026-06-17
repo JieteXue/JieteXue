@@ -6,10 +6,10 @@
     <meta name="color-scheme" content="dark" />
     <title>JieteXue · Personal Blog</title>
     <meta name="description" content="我是一个持续整理数学、物理和工具使用经验的学习者，把理解过程沉淀成文章、项目和可维护的公开记录。" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1117'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial,sans-serif' font-size='24' font-weight='700' fill='%237dd3fc'%3EJX%3C/text%3E%3C/svg%3E" />
     <link rel="stylesheet" href="./assets/site.css" />
     <link rel="prefetch" href="./zhihu.html" as="document" />
     <link rel="prefetch" href="./github.html" as="document" />
-    <link rel="stylesheet" href="https://unpkg.com/vis-network@9.1.9/styles/vis-network.min.css" />
   </head>
   <body>
     <header class="topbar">
@@ -65,7 +65,10 @@
               <button type="button" data-map-action="physics">Physics</button>
             </div>
           </div>
-          <div id="site-map-network" class="site-map-network" aria-label="Draggable and zoomable site map"></div>
+          <div class="site-map-network" aria-label="Draggable and zoomable knowledge map">
+            <canvas id="site-map-network" aria-label="Draggable and zoomable knowledge map"></canvas>
+            <p id="site-map-status" class="graph-status" aria-live="polite">Preparing graph...</p>
+          </div>
         </div>
 
         <aside class="graph-detail" id="site-map-detail" aria-live="polite">
@@ -160,8 +163,7 @@
         </div>
       </section>
       <script type="application/json" id="site-map-data">{"nodes":[{"id":"home","label":"JieteXue","type":"root","description":"个人站主入口，连接文章、项目、工具和后续图库。","href":"./index.html","x":480,"y":260},{"id":"zhihu","label":"知乎文章库","type":"primary","description":"按章节、系列和主题整理已经发表在知乎上的文章。","href":"./zhihu.html","x":230,"y":190},{"id":"math-physics","label":"Math / Physics","type":"knowledge","description":"数学、物理和相关学习笔记。","href":"./zhihu.html#math-physics","x":120,"y":360},{"id":"math","label":"Math","type":"math","description":"数学主题、证明、结构和问题整理。","href":"./zhihu.html#math","x":280,"y":470},{"id":"physics","label":"Physics","type":"physics","description":"物理直觉、模型、公式和推导笔记。","href":"./zhihu.html#physics","x":80,"y":520},{"id":"code-tool","label":"Code / Tool","type":"tool","description":"代码、工具、自动化和工程实践。","href":"./zhihu.html#code-tool","x":690,"y":150},{"id":"github","label":"GitHub 项目","type":"project","description":"精选仓库、工具建设和后续可公开维护的代码项目。","href":"./github.html","x":790,"y":330},{"id":"gallery","label":"Gallery","type":"future","description":"后续独立图库入口，用于生活照片、文章配图和工具输出。","href":"#","x":560,"y":500},{"id":"profile","label":"About / Links","type":"profile","description":"个人简介、维护说明和外部入口。","href":"https://github.com/JieteXue/JieteXue","x":450,"y":80}],"edges":[{"from":"home","to":"zhihu"},{"from":"zhihu","to":"math-physics"},{"from":"math-physics","to":"math"},{"from":"math-physics","to":"physics"},{"from":"home","to":"code-tool"},{"from":"code-tool","to":"github"},{"from":"home","to":"gallery"},{"from":"home","to":"profile"}]}</script>
-      <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
-      <script src="./assets/site-map.js"></script>
+      <script type="module" src="./assets/site-map.js"></script>
     </main>
 
     <footer class="footer">

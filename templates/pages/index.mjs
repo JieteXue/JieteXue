@@ -7,8 +7,7 @@ export function renderIndexPage(profile, siteMap) {
     title: `${profile.name} · Personal Blog`,
     description: profile.intro,
     head: `    <link rel="prefetch" href="./zhihu.html" as="document" />
-    <link rel="prefetch" href="./github.html" as="document" />
-    <link rel="stylesheet" href="https://unpkg.com/vis-network@9.1.9/styles/vis-network.min.css" />`,
+    <link rel="prefetch" href="./github.html" as="document" />`,
     footer: "Built for GitHub Pages · Updated from structured data files.",
     main: `    <main class="site-shell home-shell">
       <section class="dashboard-hero" aria-labelledby="hero-title">
@@ -35,7 +34,10 @@ ${renderIntroDetails(profile.introDetails)}
               <button type="button" data-map-action="physics">Physics</button>
             </div>
           </div>
-          <div id="site-map-network" class="site-map-network" aria-label="Draggable and zoomable site map"></div>
+          <div class="site-map-network" aria-label="Draggable and zoomable knowledge map">
+            <canvas id="site-map-network" aria-label="Draggable and zoomable knowledge map"></canvas>
+            <p id="site-map-status" class="graph-status" aria-live="polite">Preparing graph...</p>
+          </div>
         </div>
 
         <aside class="graph-detail" id="site-map-detail" aria-live="polite">
@@ -112,8 +114,7 @@ ${renderTimelinePreview(profile.timeline)}
         </div>
       </section>
       <script type="application/json" id="site-map-data">${escapeJsonForScript(siteMap)}</script>
-      <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
-      <script src="./assets/site-map.js"></script>
+      <script type="module" src="./assets/site-map.js"></script>
     </main>`,
   });
 }

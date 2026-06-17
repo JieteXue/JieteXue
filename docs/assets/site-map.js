@@ -1,148 +1,266 @@
-const container = document.getElementById("site-map-network");
+import {
+  Canvas2DRenderer,
+  createSimulationClient,
+  defaultDisplayOptions,
+  GraphModel,
+  normalizeGraph
+} from "./knowledge-graph/engine/index.js";
+
+const canvas = document.getElementById("site-map-network");
 const dataElement = document.getElementById("site-map-data");
 const detail = document.getElementById("site-map-detail");
+const status = document.getElementById("site-map-status");
 
-if (container && dataElement && detail && window.vis) {
-  const siteMap = JSON.parse(dataElement.textContent);
-  const palette = {
-    root: { background: "#1f6feb", border: "#79c0ff" },
-    primary: { background: "#0e4429", border: "#3fb950" },
-    knowledge: { background: "#1c2d5a", border: "#58a6ff" },
-    math: { background: "#2d235f", border: "#a371f7" },
-    physics: { background: "#3a2a0b", border: "#d29922" },
-    tool: { background: "#123a43", border: "#39c5cf" },
-    project: { background: "#2f1b3a", border: "#d2a8ff" },
-    future: { background: "#2b3137", border: "#8b949e" },
-    profile: { background: "#3b2308", border: "#ffa657" },
-  };
+const palette = {
+  root: "#58a6ff",
+  primary: "#3fb950",
+  knowledge: "#79c0ff",
+  math: "#a371f7",
+  physics: "#d29922",
+  tool: "#39c5cf",
+  project: "#d2a8ff",
+  future: "#8b949e",
+  profile: "#ffa657"
+};
 
-  const nodes = new vis.DataSet(
-    siteMap.nodes.map((node) => {
-      const color = palette[node.type] || palette.future;
-      return {
-        ...node,
-        title: node.description,
-        color: {
-          background: color.background,
-          border: color.border,
-          highlight: {
-            background: color.background,
-            border: "#e6edf3",
-          },
-        },
-        font: {
-          color: "#e6edf3",
-          face: "Inter, system-ui, sans-serif",
-          size: node.type === "root" ? 18 : 15,
-          bold: node.type === "root",
-        },
-        shape: node.type === "root" ? "box" : "dot",
-        size: node.type === "root" ? 34 : node.type === "primary" ? 28 : 22,
-        fixed: false,
-      };
-    }),
-  );
+const linkPalette = {
+  contains: "rgba(63, 185, 80, 0.42)",
+  related: "rgba(121, 192, 255, 0.36)",
+  route: "rgba(57, 197, 207, 0.42)"
+};
 
-  const edges = new vis.DataSet(
-    siteMap.edges.map((edge) => ({
-      ...edge,
-      arrows: "to",
-      color: {
-        color: "rgba(139, 148, 158, 0.64)",
-        highlight: "#39c5cf",
-      },
-      smooth: {
-        type: "cubicBezier",
-        roundness: 0.22,
-      },
+if (canvas && dataElement && detail) {
+  const siteMap = JSON.parse(dataElement.textContent || "{}");
+  const graph = normalizeGraph({
+    nodes: (siteMap.nodes || []).map((node) => ({
+      id: node.id,
+      label: node.label,
+      kind: node.type || "node",
+      radius: node.type === "root" ? 15 : node.type === "primary" ? 12 : 9,
+      color: palette[node.type] || palette.future,
+      x: Number.isFinite(node.x) ? node.x - 460 : undefined,
+      y: Number.isFinite(node.y) ? node.y - 300 : undefined,
+      data: {
+        description: node.description || "",
+        href: node.href || "#",
+        type: node.type || "node"
+      }
     })),
-  );
+    links: (siteMap.edges || []).map((edge, index) => ({
+      id: edge.id || `${edge.from}->${edge.to}:${index}`,
+      source: edge.from,
+      target: edge.to,
+      kind: edge.type || "contains",
+      directed: true
+    }))
+  });
 
-  const network = new vis.Network(
-    container,
-    { nodes, edges },
-    {
-      autoResize: true,
-      interaction: {
-        dragNodes: true,
-        dragView: true,
-        hover: true,
-        multiselect: false,
-        navigationButtons: true,
-        zoomView: true,
-      },
-      physics: {
-        enabled: false,
-        stabilization: false,
-      },
-      layout: {
-        improvedLayout: false,
-      },
-      nodes: {
-        borderWidth: 1.5,
-        shadow: {
-          enabled: true,
-          color: "rgba(0, 0, 0, 0.35)",
-          size: 14,
-          x: 0,
-          y: 8,
-        },
-      },
-      edges: {
-        width: 1.2,
-        selectionWidth: 2,
-      },
+  const model = new GraphModel(graph);
+  let renderer = null;
+  let selectedNodeId = "home";
+  let hoveredNodeId = null;
+  let physicsEnabled = true;
+  let fitOnNextTick = true;
+
+  const simulation = createSimulationClient({
+    workerUrl: new URL("./knowledge-graph/engine/layout/force-worker.js", import.meta.url),
+    model,
+    motionController: {
+      onTick(metrics) {
+        if (!metrics) return null;
+        if (metrics.edgeAngleDelta < 0.002 && metrics.edgeLengthDelta < 0.25 && metrics.alpha < 0.1) {
+          return { damp: 0.12 };
+        }
+        return null;
+      }
     },
-  );
-
-  const renderDetail = (nodeId) => {
-    const node = siteMap.nodes.find((item) => item.id === nodeId) || siteMap.nodes[0];
-    const external = node.href.startsWith("http://") || node.href.startsWith("https://");
-    detail.innerHTML = `
-      <p class="eyebrow">${escapeHtml(node.type)}</p>
-      <h2>${escapeHtml(node.label)}</h2>
-      <p>${escapeHtml(node.description)}</p>
-      <a href="${escapeAttribute(node.href)}"${external ? ' target="_blank" rel="noreferrer"' : ""}>Open node</a>
-    `;
-  };
-
-  network.once("afterDrawing", () => {
-    network.fit({ animation: { duration: 500, easingFunction: "easeInOutQuad" } });
+    onSettled: () => {
+      status && (status.textContent = `${model.nodes.length} nodes, ${model.links.length} links`);
+      renderer?.render();
+    },
+    onTick: () => {
+      if (fitOnNextTick) {
+        fitOnNextTick = false;
+        renderer?.resetZoom({ padding: 72 });
+        return;
+      }
+      renderer?.render();
+    }
   });
 
-  network.on("selectNode", (event) => {
-    renderDetail(event.nodes[0]);
-  });
-
-  network.on("doubleClick", (event) => {
-    const nodeId = event.nodes[0];
-    const node = siteMap.nodes.find((item) => item.id === nodeId);
-    if (node && node.href && node.href !== "#") {
-      window.location.href = node.href;
+  renderer = new Canvas2DRenderer({
+    canvas,
+    model,
+    getAppearance: () => ({
+      display: {
+        ...defaultDisplayOptions,
+        linkThickness: 1.15,
+        nodeSize: 1.08,
+        textFade: 0.55
+      },
+      labelPolicy: {
+        density: 0.95,
+        mode: "density",
+        priority: "degree",
+        textFade: 0.55
+      },
+      nodeSizePolicy: {
+        maxScale: 1.75,
+        minScale: 1,
+        mode: "metric",
+        priority: "degree",
+        strength: 0.28
+      },
+      theme: {
+        canvas: {
+          background: "rgba(5, 8, 15, 0.92)"
+        },
+        node: {
+          fill: "#7dd3fc",
+          stroke: "rgba(230, 237, 243, 0.22)",
+          hoverFill: "#facc15",
+          hoverStroke: "#fde68a",
+          selectedFill: "#f8fafc",
+          selectedStroke: "#39c5cf",
+          dimmedFill: "rgba(74, 86, 103, 0.22)",
+          dimmedStroke: "rgba(230, 237, 243, 0.06)",
+          accentRingColor: "#39c5cf",
+          accentRingWidth: 2
+        },
+        link: {
+          defaultColor: "rgba(139, 148, 158, 0.28)",
+          activeColor: "rgba(57, 197, 207, 0.78)",
+          dimmedColor: "rgba(139, 148, 158, 0.08)",
+          byKind: linkPalette
+        },
+        label: {
+          color: "rgba(230, 237, 243, 0.96)",
+          dimmedColor: "rgba(230, 237, 243, 0.18)",
+          fontFamily: "Inter, system-ui, sans-serif",
+          fontSize: 12,
+          fontWeight: "700",
+          density: 0.95
+        }
+      },
+      viewport: {
+        fitPadding: 72,
+        maxScale: 3.8,
+        minScale: 0.18,
+        zoomStep: 1.18
+      }
+    }),
+    getHighlightedLinks,
+    getHighlightedNodes,
+    interaction: {
+      hoveredNodeId,
+      openOn: "double-click",
+      selectedNodeId,
+      selectOnClick: true
+    },
+    events: {
+      onNodeDrag: ({ alpha, node, point }) => {
+        simulation.pinNode(node.id, point, alpha);
+      },
+      onNodeHover: ({ node }) => {
+        hoveredNodeId = node?.id || null;
+        renderer?.setInteractionState({ hoveredNodeId }, { render: false });
+      },
+      onNodeOpen: ({ node }) => {
+        openNode(node);
+      },
+      onNodeRelease: ({ node }) => {
+        simulation.releaseNode(node.id);
+      },
+      onNodeSelect: ({ node }) => {
+        selectedNodeId = node?.id || null;
+        renderer?.setInteractionState({ selectedNodeId });
+        renderDetail(selectedNodeId || "home");
+      },
+      onStatus: ({ statusText }) => {
+        if (status) status.textContent = statusText;
+      }
     }
   });
 
   document.querySelector('[data-map-action="fit"]')?.addEventListener("click", () => {
-    network.fit({ animation: { duration: 450, easingFunction: "easeInOutQuad" } });
+    renderer?.resetZoom({ padding: 72 });
   });
 
-  document.querySelector('[data-map-action="physics"]')?.addEventListener("click", (event) => {
-    const enabled = event.currentTarget.getAttribute("aria-pressed") !== "true";
-    event.currentTarget.setAttribute("aria-pressed", String(enabled));
-    network.setOptions({
-      physics: {
-        enabled,
-        barnesHut: {
-          gravitationalConstant: -3800,
-          springLength: 170,
-          springConstant: 0.035,
-        },
-        stabilization: false,
-      },
-    });
+  const physicsButton = document.querySelector('[data-map-action="physics"]');
+  physicsButton?.setAttribute("aria-pressed", String(physicsEnabled));
+  physicsButton?.addEventListener("click", (event) => {
+    physicsEnabled = !physicsEnabled;
+    event.currentTarget.setAttribute("aria-pressed", String(physicsEnabled));
+    if (physicsEnabled) {
+      simulation.start(forceOptions(), 0.8);
+    } else {
+      simulation.stop();
+    }
   });
 
-  renderDetail("home");
+  renderDetail(selectedNodeId);
+  simulation.start(forceOptions(), 1);
+}
+
+function forceOptions() {
+  return {
+    centerStrength: 0.075,
+    linkStrength: 1,
+    linkDistance: 145,
+    repelStrength: 460
+  };
+}
+
+function getHighlightedNodes(activeNodeId, { model }) {
+  const nodes = new Set([activeNodeId]);
+  for (const link of model.links) {
+    if (link.sourceId === activeNodeId) nodes.add(link.targetId);
+    if (link.targetId === activeNodeId) nodes.add(link.sourceId);
+  }
+  return nodes;
+}
+
+function getHighlightedLinks(activeNodeId, { model }) {
+  return model.links
+    .filter((link) => link.sourceId === activeNodeId || link.targetId === activeNodeId)
+    .map((link) => link.id);
+}
+
+function renderDetail(nodeId) {
+  const node = getNode(nodeId) || getNode("home");
+  if (!node) return;
+
+  const href = node.data?.href || "#";
+  const external = href.startsWith("http://") || href.startsWith("https://");
+  detail.innerHTML = `
+    <p class="eyebrow">${escapeHtml(node.data?.type || node.kind)}</p>
+    <h2>${escapeHtml(node.label)}</h2>
+    <p>${escapeHtml(node.data?.description || "")}</p>
+    <a href="${escapeAttribute(href)}"${external ? ' target="_blank" rel="noreferrer"' : ""}>Open node</a>
+  `;
+}
+
+function openNode(node) {
+  const href = node?.data?.href;
+  if (!href || href === "#") return;
+  window.location.href = href;
+}
+
+function getNode(nodeId) {
+  if (!dataElement) return null;
+  const siteMap = JSON.parse(dataElement.textContent || "{}");
+  const raw = (siteMap.nodes || []).find((node) => node.id === nodeId);
+  if (!raw) return null;
+  return {
+    id: raw.id,
+    label: raw.label,
+    kind: raw.type,
+    data: {
+      description: raw.description,
+      href: raw.href,
+      type: raw.type
+    }
+  };
 }
 
 function escapeHtml(value) {

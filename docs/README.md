@@ -18,7 +18,7 @@ GitHub Pages is expected to publish from the repository `main` branch and `/docs
 - `../data/zhihu-articles.json`: article records. `tags` are horizontal labels; `categoryIds` place articles into the smallest relevant chapters; `seriesId` optionally connects an article to a reading path.
 - `../data/github-projects.json`: selected GitHub projects shown on `github.html`.
 - `../data/profile.json`: home page profile content, including hero text, primary links, and personal information blocks.
-- `../data/site-map.json`: home page interactive node map data. The rendering uses the existing `vis-network` library; edit nodes and edges here instead of hand-writing graph markup.
+- `../data/site-map.json`: home page interactive node map data. The rendering uses the static `knowledge-graph-engine` canvas modules in `assets/knowledge-graph/engine/`; edit nodes and edges here instead of hand-writing graph markup.
 
 ## Maintenance
 
@@ -30,4 +30,4 @@ GitHub Pages is expected to publish from the repository `main` branch and `/docs
 - Do not guess article dates. Omit `date` unless the date is known.
 - Shared page structure is in `../templates/layout.mjs`; page-specific markup is in `../templates/pages/`.
 - Future gallery planning lives in `../planning/gallery-plan.md`; the reusable Codex skill draft lives in `../skills/personal-gallery-planner/SKILL.md`.
-- Future personal knowledge graph planning lives in `../planning/knowledge-graph-plan.md`; prefer reusing the existing Obsidian-like force graph project before expanding the temporary `vis-network` map.
+- Personal knowledge graph planning lives in `../planning/knowledge-graph-plan.md`; the current home page uses the forked Obsidian-like force graph engine as a static GitHub Pages integration.

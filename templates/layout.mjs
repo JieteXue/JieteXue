@@ -15,6 +15,7 @@ export function renderLayout({ active, title, description, head = "", footer, ma
     <meta name="color-scheme" content="dark" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeAttribute(description)}" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1117'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial,sans-serif' font-size='24' font-weight='700' fill='%237dd3fc'%3EJX%3C/text%3E%3C/svg%3E" />
     <link rel="stylesheet" href="./assets/site.css" />
 ${head}
   </head>
