@@ -22,6 +22,16 @@ ${renderIntroDetails(profile.introDetails)}
           <div class="action-row">
 ${renderPrimaryLinks(profile.primaryLinks)}
           </div>
+          <div class="site-note" aria-label="Site maintenance notes">
+            <div>
+              <span>Structured</span>
+              <p>个人信息、文章、系列和项目都从 JSON 生成，方便长期手动维护。</p>
+            </div>
+            <div>
+              <span>Static</span>
+              <p>站点发布在 GitHub Pages，没有后台依赖，内容改动可直接审查。</p>
+            </div>
+          </div>
         </div>
 
         <aside class="dashboard" aria-label="Current dashboard">

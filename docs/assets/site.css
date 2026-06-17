@@ -160,12 +160,10 @@ h1 {
 }
 
 .hero-copy {
-  min-height: 460px;
   padding: clamp(28px, 5vw, 54px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 32px;
+  display: grid;
+  align-content: start;
+  gap: 28px;
 }
 
 .hero h1 {
@@ -214,6 +212,34 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+.site-note {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.site-note div {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: rgba(17, 24, 39, 0.48);
+}
+
+.site-note span {
+  color: var(--cyan);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.site-note p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
 }
 
 .button {
@@ -676,6 +702,7 @@ h1 {
   .section-grid,
   .status-grid,
   .intro-details,
+  .site-note,
   .content-grid,
   .child-tree {
     grid-template-columns: 1fr;
@@ -690,9 +717,6 @@ h1 {
     padding-top: 28px;
   }
 
-  .hero-copy {
-    min-height: 420px;
-  }
 }
 
 @media (max-width: 640px) {
