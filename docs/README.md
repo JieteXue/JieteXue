@@ -30,3 +30,4 @@ GitHub Pages is expected to publish from the repository `main` branch and `/docs
 - Do not guess article dates. Omit `date` unless the date is known.
 - Shared page structure is in `../templates/layout.mjs`; page-specific markup is in `../templates/pages/`.
 - Future gallery planning lives in `../planning/gallery-plan.md`; the reusable Codex skill draft lives in `../skills/personal-gallery-planner/SKILL.md`.
+- Future personal knowledge graph planning lives in `../planning/knowledge-graph-plan.md`; prefer reusing the existing Obsidian-like force graph project before expanding the temporary `vis-network` map.
