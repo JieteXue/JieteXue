@@ -524,6 +524,12 @@ h1 {
   font-size: 22px;
 }
 
+#site-map-node-detail {
+  min-height: 174px;
+  display: grid;
+  align-content: start;
+}
+
 .graph-detail p:not(.eyebrow) {
   margin: 12px 0 0;
   color: var(--muted);

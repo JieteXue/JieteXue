@@ -58,7 +58,7 @@ if (canvas && dataElement && detail && nodeDetail) {
 
   const model = new GraphModel(graph);
   let renderer = null;
-  let selectedNodeId = "home";
+  let selectedNodeId = null;
   let hoveredNodeId = null;
   let fitOnNextTick = true;
   let forceSettings = readForceSettings();
@@ -176,7 +176,7 @@ if (canvas && dataElement && detail && nodeDetail) {
       onNodeSelect: ({ node }) => {
         selectedNodeId = node?.id || null;
         renderer?.setInteractionState({ selectedNodeId });
-        renderDetail(selectedNodeId || "home");
+        renderDetail(selectedNodeId);
       },
       onStatus: ({ statusText }) => {
         if (status) status.textContent = statusText;
@@ -187,7 +187,7 @@ if (canvas && dataElement && detail && nodeDetail) {
   bindForceControls();
   bindDisplayControls();
 
-  renderDetail(selectedNodeId);
+  renderDetail(null);
   simulation.start(forceSettings, 1);
 
   function bindForceControls() {
@@ -273,8 +273,15 @@ function formatControlValue(value) {
 }
 
 function renderDetail(nodeId) {
-  const node = getNode(nodeId) || getNode("home");
-  if (!node) return;
+  const node = nodeId ? getNode(nodeId) : null;
+  if (!node) {
+    nodeDetail.innerHTML = `
+      <p class="eyebrow">Selected node</p>
+      <h2>未选择节点</h2>
+      <p>点击图中的节点查看入口说明；拖拽节点、滚轮缩放可以探索关系。</p>
+    `;
+    return;
+  }
 
   const href = node.data?.href || "#";
   const external = href.startsWith("http://") || href.startsWith("https://");

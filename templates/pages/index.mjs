@@ -39,9 +39,8 @@ ${renderIntroDetails(profile.introDetails)}
         <aside class="graph-detail" id="site-map-detail">
           <div id="site-map-node-detail" aria-live="polite">
             <p class="eyebrow">Selected node</p>
-            <h2>JieteXue</h2>
-            <p>拖拽节点、滚轮缩放，点击节点查看入口说明。</p>
-            <a href="./index.html">Open node</a>
+            <h2>未选择节点</h2>
+            <p>点击图中的节点查看入口说明；拖拽节点、滚轮缩放可以探索关系。</p>
           </div>
           <form class="force-controls" aria-label="Force graph controls">
             <label>
