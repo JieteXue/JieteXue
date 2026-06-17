@@ -12,26 +12,28 @@ export function renderIndexPage(profile) {
     main: `    <main class="site-shell">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <div>
+          <div class="hero-main">
             <p class="eyebrow">Learning notes · Math / Physics · Tools</p>
             <h1 id="hero-title">${escapeHtml(profile.name)}</h1>
             <p class="tagline">${escapeHtml(profile.tagline)}</p>
             <p class="lead">${escapeHtml(profile.intro)}</p>
+          </div>
+          <aside class="hero-side" aria-label="Profile summary">
 ${renderIntroDetails(profile.introDetails)}
-          </div>
-          <div class="action-row">
+            <div class="action-row">
 ${renderPrimaryLinks(profile.primaryLinks)}
-          </div>
-          <div class="site-note" aria-label="Site maintenance notes">
-            <div>
-              <span>Structured</span>
-              <p>个人信息、文章、系列和项目都从 JSON 生成，方便长期手动维护。</p>
             </div>
-            <div>
-              <span>Static</span>
-              <p>站点发布在 GitHub Pages，没有后台依赖，内容改动可直接审查。</p>
+            <div class="site-note" aria-label="Site maintenance notes">
+              <div>
+                <span>Structured</span>
+                <p>个人信息、文章、系列和项目都从 JSON 生成，方便长期手动维护。</p>
+              </div>
+              <div>
+                <span>Static</span>
+                <p>站点发布在 GitHub Pages，没有后台依赖，内容改动可直接审查。</p>
+              </div>
             </div>
-          </div>
+          </aside>
         </div>
       </section>
 
@@ -111,7 +113,7 @@ function renderPrimaryLinks(items) {
     .map((item) => {
       const className = item.style === "primary" ? "button primary" : "button";
       const external = isExternalHref(item.href) ? ' target="_blank" rel="noreferrer"' : "";
-      return `            <a class="${className}" href="${escapeAttribute(item.href)}"${external}>${escapeHtml(item.label)}</a>`;
+      return `              <a class="${className}" href="${escapeAttribute(item.href)}"${external}>${escapeHtml(item.label)}</a>`;
     })
     .join("\n");
 }
