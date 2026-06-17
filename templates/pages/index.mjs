@@ -17,6 +17,7 @@ export function renderIndexPage(profile) {
             <h1 id="hero-title">${escapeHtml(profile.name)}</h1>
             <p class="tagline">${escapeHtml(profile.tagline)}</p>
             <p class="lead">${escapeHtml(profile.intro)}</p>
+${renderIntroDetails(profile.introDetails)}
           </div>
           <div class="action-row">
 ${renderPrimaryLinks(profile.primaryLinks)}
@@ -24,6 +25,7 @@ ${renderPrimaryLinks(profile.primaryLinks)}
         </div>
 
         <aside class="dashboard" aria-label="Current dashboard">
+${renderTimeline(profile.timeline)}
 ${renderProfileBlocks(profile.blocks)}
           <section class="panel status-grid" aria-label="Site metrics">
             <div class="metric">
@@ -73,6 +75,23 @@ ${renderProfileBlocks(profile.blocks)}
   });
 }
 
+function renderIntroDetails(items = []) {
+  if (items.length === 0) {
+    return "";
+  }
+
+  return `            <dl class="intro-details">
+${items
+  .map((item) => {
+    return `              <div>
+                <dt>${escapeHtml(item.label)}</dt>
+                <dd>${escapeHtml(item.value)}</dd>
+              </div>`;
+  })
+  .join("\n")}
+            </dl>`;
+}
+
 function renderPrimaryLinks(items) {
   return items
     .map((item) => {
@@ -81,6 +100,30 @@ function renderPrimaryLinks(items) {
       return `            <a class="${className}" href="${escapeAttribute(item.href)}"${external}>${escapeHtml(item.label)}</a>`;
     })
     .join("\n");
+}
+
+function renderTimeline(items = []) {
+  if (items.length === 0) {
+    return "";
+  }
+
+  return `          <section class="panel profile-block timeline-block">
+            <p class="eyebrow">Timeline</p>
+            <h2>履历 / 记录</h2>
+            <div class="timeline-list">
+${items
+  .map((item) => {
+    return `              <article class="timeline-item">
+                <span>${escapeHtml(item.period)}</span>
+                <div>
+                  <h3>${escapeHtml(item.title)}</h3>
+                  <p>${escapeHtml(item.description)}</p>
+                </div>
+              </article>`;
+  })
+  .join("\n")}
+            </div>
+          </section>`;
 }
 
 function renderProfileBlocks(blocks) {

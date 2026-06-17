@@ -153,6 +153,25 @@ export function validateProfile(item, profilePath) {
   requireArrayObject(item, "primaryLinks", label);
   requireArrayObject(item, "blocks", label);
 
+  if (item.introDetails !== undefined) {
+    requireArrayObject(item, "introDetails", label);
+    item.introDetails.forEach((detail, index) => {
+      const detailLabel = `${profilePath}.introDetails[${index}]`;
+      requireString(detail, "label", detailLabel);
+      requireString(detail, "value", detailLabel);
+    });
+  }
+
+  if (item.timeline !== undefined) {
+    requireArrayObject(item, "timeline", label);
+    item.timeline.forEach((entry, index) => {
+      const entryLabel = `${profilePath}.timeline[${index}]`;
+      requireString(entry, "period", entryLabel);
+      requireString(entry, "title", entryLabel);
+      requireString(entry, "description", entryLabel);
+    });
+  }
+
   item.primaryLinks.forEach((link, index) => {
     const linkLabel = `${profilePath}.primaryLinks[${index}]`;
     requireString(link, "label", linkLabel);

@@ -22,7 +22,7 @@ GitHub Pages is expected to publish from the repository `main` branch and `/docs
 ## Maintenance
 
 - Add a Zhihu article in `../data/zhihu-articles.json`, then run `node scripts/build-site.mjs` from the repository root.
-- Edit home page personal sections in `../data/profile.json`; each block supports `title`, `eyebrow`, `body`, `items`, and optional `links`.
+- Edit home page personal sections in `../data/profile.json`; hero details live in `introDetails`, resume-like records live in `timeline`, and content blocks support `title`, `eyebrow`, `body`, `items`, and optional `links`.
 - Add a category in `../data/zhihu-categories.json`; use the smallest relevant category ID in each article's `categoryIds`.
 - Add a reading path in `../data/zhihu-series.json`; connect articles with `seriesId`.
 - Do not guess article dates. Omit `date` unless the date is known.
