@@ -196,6 +196,18 @@ h1 {
   line-height: 1.35;
 }
 
+.site-notice {
+  display: inline-flex;
+  margin: 20px 0 0;
+  border: 1px solid rgba(210, 153, 34, 0.42);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #f0d18a;
+  background: rgba(210, 153, 34, 0.1);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 .intro-details {
   display: grid;
   grid-template-columns: 1fr;

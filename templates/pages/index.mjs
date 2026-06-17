@@ -16,6 +16,7 @@ export function renderIndexPage(profile, siteMap) {
           <h1 id="hero-title">${escapeHtml(profile.name)}</h1>
           <p class="tagline">${escapeHtml(profile.tagline)}</p>
           <p class="lead">${escapeHtml(profile.intro)}</p>
+          <p class="site-notice">本站正在测试搭建中，内容与功能有待继续完善。</p>
         </div>
         <aside class="dashboard-profile" aria-label="Profile summary">
 ${renderIntroDetails(profile.introDetails)}
