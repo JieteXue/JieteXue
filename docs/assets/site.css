@@ -386,7 +386,7 @@ h1 {
 
 .graph-console {
   grid-template-columns: minmax(0, 1fr) 300px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .section-grid {
@@ -445,7 +445,8 @@ h1 {
 }
 
 .graph-panel {
-  min-height: 560px;
+  height: clamp(420px, 52vw, 560px);
+  min-height: 0;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   overflow: hidden;
@@ -493,7 +494,8 @@ h1 {
 }
 
 .site-map-network {
-  min-height: 480px;
+  min-height: 0;
+  height: 100%;
   background:
     linear-gradient(rgba(39, 50, 68, 0.25) 1px, transparent 1px),
     linear-gradient(90deg, rgba(39, 50, 68, 0.25) 1px, transparent 1px),
@@ -508,6 +510,7 @@ h1 {
 }
 
 .graph-detail {
+  align-self: start;
   display: grid;
   align-content: start;
   padding: 22px;
