@@ -6,10 +6,15 @@ on:
       - main
     paths:
       - "data/**"
-      - "scripts/build-site.mjs"
+      - "scripts/**"
+      - "templates/**"
       - "docs/**"
       - ".github/workflows/site.yml"
   workflow_dispatch:
+
+concurrency:
+  group: site-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
