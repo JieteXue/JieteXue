@@ -27,3 +27,4 @@ GitHub Pages is expected to publish from the repository `main` branch and `/docs
 - Add a reading path in `../data/zhihu-series.json`; connect articles with `seriesId`.
 - Do not guess article dates. Omit `date` unless the date is known.
 - Shared page structure is in `../templates/layout.mjs`; page-specific markup is in `../templates/pages/`.
+- Future gallery planning lives in `../planning/gallery-plan.md`; the reusable Codex skill draft lives in `../skills/personal-gallery-planner/SKILL.md`.
