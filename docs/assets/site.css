@@ -470,29 +470,6 @@ h1 {
   margin-bottom: 8px;
 }
 
-.graph-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.graph-actions button {
-  min-height: 34px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 0 12px;
-  color: var(--text);
-  background: #161b22;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.graph-actions button:hover,
-.graph-actions button[aria-pressed="true"] {
-  border-color: rgba(57, 197, 207, 0.62);
-  background: rgba(57, 197, 207, 0.13);
-}
-
 .site-map-network {
   position: relative;
   min-height: 0;
@@ -538,6 +515,7 @@ h1 {
   align-self: start;
   display: grid;
   align-content: start;
+  gap: 20px;
   padding: 22px;
 }
 
@@ -565,6 +543,34 @@ h1 {
   background: #1f6feb;
   color: white;
   font-weight: 700;
+}
+
+.force-controls {
+  display: grid;
+  gap: 14px;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+
+.force-controls label {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 12px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.force-controls output {
+  color: var(--cyan);
+  font-variant-numeric: tabular-nums;
+}
+
+.force-controls input {
+  grid-column: 1 / -1;
+  width: 100%;
+  accent-color: var(--cyan);
 }
 
 .mission-panel {

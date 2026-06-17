@@ -29,10 +29,6 @@ ${renderIntroDetails(profile.introDetails)}
               <p class="eyebrow">Interactive map</p>
               <h2>知识与入口地图</h2>
             </div>
-            <div class="graph-actions" aria-label="Map actions">
-              <button type="button" data-map-action="fit">Fit</button>
-              <button type="button" data-map-action="physics">Physics</button>
-            </div>
           </div>
           <div class="site-map-network" aria-label="Draggable and zoomable knowledge map">
             <canvas id="site-map-network" aria-label="Draggable and zoomable knowledge map"></canvas>
@@ -40,11 +36,40 @@ ${renderIntroDetails(profile.introDetails)}
           </div>
         </div>
 
-        <aside class="graph-detail" id="site-map-detail" aria-live="polite">
-          <p class="eyebrow">Selected node</p>
-          <h2>JieteXue</h2>
-          <p>拖拽节点、滚轮缩放，点击节点查看入口说明。</p>
-          <a href="./index.html">Open node</a>
+        <aside class="graph-detail" id="site-map-detail">
+          <div id="site-map-node-detail" aria-live="polite">
+            <p class="eyebrow">Selected node</p>
+            <h2>JieteXue</h2>
+            <p>拖拽节点、滚轮缩放，点击节点查看入口说明。</p>
+            <a href="./index.html">Open node</a>
+          </div>
+          <form class="force-controls" aria-label="Force graph controls">
+            <label>
+              <span>Repel</span>
+              <output for="graph-repel" data-force-output="repelStrength">520</output>
+              <input id="graph-repel" type="range" min="160" max="1100" step="20" value="520" data-force-input="repelStrength" />
+            </label>
+            <label>
+              <span>Distance</span>
+              <output for="graph-distance" data-force-output="linkDistance">150</output>
+              <input id="graph-distance" type="range" min="70" max="260" step="5" value="150" data-force-input="linkDistance" />
+            </label>
+            <label>
+              <span>Link</span>
+              <output for="graph-link" data-force-output="linkStrength">1.05</output>
+              <input id="graph-link" type="range" min="0.2" max="2.4" step="0.05" value="1.05" data-force-input="linkStrength" />
+            </label>
+            <label>
+              <span>Center</span>
+              <output for="graph-center" data-force-output="centerStrength">0.07</output>
+              <input id="graph-center" type="range" min="0" max="0.18" step="0.005" value="0.07" data-force-input="centerStrength" />
+            </label>
+            <label>
+              <span>Node size</span>
+              <output for="graph-node-size" data-display-output="nodeSize">1.08</output>
+              <input id="graph-node-size" type="range" min="0.75" max="1.8" step="0.02" value="1.08" data-display-input="nodeSize" />
+            </label>
+          </form>
         </aside>
       </section>
 

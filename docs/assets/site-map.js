@@ -9,6 +9,7 @@ import {
 const canvas = document.getElementById("site-map-network");
 const dataElement = document.getElementById("site-map-data");
 const detail = document.getElementById("site-map-detail");
+const nodeDetail = document.getElementById("site-map-node-detail");
 const status = document.getElementById("site-map-status");
 
 const palette = {
@@ -29,7 +30,7 @@ const linkPalette = {
   route: "rgba(57, 197, 207, 0.42)"
 };
 
-if (canvas && dataElement && detail) {
+if (canvas && dataElement && detail && nodeDetail) {
   const siteMap = JSON.parse(dataElement.textContent || "{}");
   const graph = normalizeGraph({
     nodes: (siteMap.nodes || []).map((node) => ({
@@ -59,8 +60,9 @@ if (canvas && dataElement && detail) {
   let renderer = null;
   let selectedNodeId = "home";
   let hoveredNodeId = null;
-  let physicsEnabled = true;
   let fitOnNextTick = true;
+  let forceSettings = readForceSettings();
+  let displaySettings = readDisplaySettings();
 
   const simulation = createSimulationClient({
     workerUrl: new URL("./knowledge-graph/engine/layout/force-worker.js", import.meta.url),
@@ -95,7 +97,7 @@ if (canvas && dataElement && detail) {
       display: {
         ...defaultDisplayOptions,
         linkThickness: 1.15,
-        nodeSize: 1.08,
+        nodeSize: displaySettings.nodeSize,
         textFade: 0.55
       },
       labelPolicy: {
@@ -182,33 +184,41 @@ if (canvas && dataElement && detail) {
     }
   });
 
-  document.querySelector('[data-map-action="fit"]')?.addEventListener("click", () => {
-    renderer?.resetZoom({ padding: 72 });
-  });
-
-  const physicsButton = document.querySelector('[data-map-action="physics"]');
-  physicsButton?.setAttribute("aria-pressed", String(physicsEnabled));
-  physicsButton?.addEventListener("click", (event) => {
-    physicsEnabled = !physicsEnabled;
-    event.currentTarget.setAttribute("aria-pressed", String(physicsEnabled));
-    if (physicsEnabled) {
-      simulation.start(forceOptions(), 0.8);
-    } else {
-      simulation.stop();
-    }
-  });
+  bindForceControls();
+  bindDisplayControls();
 
   renderDetail(selectedNodeId);
-  simulation.start(forceOptions(), 1);
-}
+  simulation.start(forceSettings, 1);
 
-function forceOptions() {
-  return {
-    centerStrength: 0.075,
-    linkStrength: 1,
-    linkDistance: 145,
-    repelStrength: 460
-  };
+  function bindForceControls() {
+    document.querySelectorAll("[data-force-input]").forEach((input) => {
+      const key = input.dataset.forceInput;
+      syncOutput("force", key, input.value);
+      input.addEventListener("input", () => {
+        forceSettings = {
+          ...forceSettings,
+          [key]: Number(input.value)
+        };
+        syncOutput("force", key, input.value);
+        simulation.updateForces(forceSettings, 0.85);
+      });
+    });
+  }
+
+  function bindDisplayControls() {
+    document.querySelectorAll("[data-display-input]").forEach((input) => {
+      const key = input.dataset.displayInput;
+      syncOutput("display", key, input.value);
+      input.addEventListener("input", () => {
+        displaySettings = {
+          ...displaySettings,
+          [key]: Number(input.value)
+        };
+        syncOutput("display", key, input.value);
+        renderer?.render();
+      });
+    });
+  }
 }
 
 function getHighlightedNodes(activeNodeId, { model }) {
@@ -226,13 +236,49 @@ function getHighlightedLinks(activeNodeId, { model }) {
     .map((link) => link.id);
 }
 
+function readForceSettings() {
+  return {
+    repelStrength: readControlNumber("force", "repelStrength", 520),
+    linkDistance: readControlNumber("force", "linkDistance", 150),
+    linkStrength: readControlNumber("force", "linkStrength", 1.05),
+    centerStrength: readControlNumber("force", "centerStrength", 0.07)
+  };
+}
+
+function readDisplaySettings() {
+  return {
+    nodeSize: readControlNumber("display", "nodeSize", 1.08)
+  };
+}
+
+function readControlNumber(kind, key, fallback) {
+  const input = document.querySelector(`[data-${kind}-input="${key}"]`);
+  const value = Number(input?.value);
+  return Number.isFinite(value) ? value : fallback;
+}
+
+function syncOutput(kind, key, value) {
+  const output = document.querySelector(`[data-${kind}-output="${key}"]`);
+  if (!output) return;
+  output.value = formatControlValue(Number(value));
+  output.textContent = output.value;
+}
+
+function formatControlValue(value) {
+  if (!Number.isFinite(value)) return "-";
+  if (Math.abs(value) < 10 && !Number.isInteger(value)) {
+    return value.toFixed(3).replace(/0+$/, "").replace(/\.$/, "");
+  }
+  return String(value);
+}
+
 function renderDetail(nodeId) {
   const node = getNode(nodeId) || getNode("home");
   if (!node) return;
 
   const href = node.data?.href || "#";
   const external = href.startsWith("http://") || href.startsWith("https://");
-  detail.innerHTML = `
+  nodeDetail.innerHTML = `
     <p class="eyebrow">${escapeHtml(node.data?.type || node.kind)}</p>
     <h2>${escapeHtml(node.label)}</h2>
     <p>${escapeHtml(node.data?.description || "")}</p>
