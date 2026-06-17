@@ -1,10 +1,11 @@
 import { renderLayout } from "../layout.mjs";
+import { escapeAttribute, escapeHtml } from "../../scripts/lib/html.mjs";
 
-export function renderIndexPage() {
+export function renderIndexPage(profile) {
   return renderLayout({
     active: "home",
-    title: "JieteXue · Personal Blog",
-    description: "JieteXue 的个人博客入口，连接知乎文章、GitHub 项目和学习笔记。",
+    title: `${profile.name} · Personal Blog`,
+    description: profile.intro,
     head: `    <link rel="prefetch" href="./zhihu.html" as="document" />
     <link rel="prefetch" href="./github.html" as="document" />`,
     footer: "Built for GitHub Pages · Updated from structured data files.",
@@ -12,28 +13,18 @@ export function renderIndexPage() {
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
           <div>
-            <p class="eyebrow">Personal dashboard · writing · projects</p>
-            <h1 id="hero-title">JieteXue</h1>
-            <p class="lead">
-              一个面向写作、数学物理兴趣、开源项目和知识整理的个人入口。这里连接知乎文章、GitHub 项目，以及正在打磨的小工具和笔记。
-            </p>
+            <p class="eyebrow">Learning notes · Math / Physics · Tools</p>
+            <h1 id="hero-title">${escapeHtml(profile.name)}</h1>
+            <p class="tagline">${escapeHtml(profile.tagline)}</p>
+            <p class="lead">${escapeHtml(profile.intro)}</p>
           </div>
           <div class="action-row">
-            <a class="button primary" href="./zhihu.html">看知乎文章</a>
-            <a class="button" href="./github.html">看 GitHub 项目</a>
-            <a class="button" href="https://www.zhihu.com/people/7-63-5-13-42" target="_blank" rel="noreferrer">知乎主页</a>
+${renderPrimaryLinks(profile.primaryLinks)}
           </div>
         </div>
 
         <aside class="dashboard" aria-label="Current dashboard">
-          <section class="panel">
-            <h2>Current Focus</h2>
-            <p>把长期兴趣沉淀成可链接、可维护、可继续扩展的公开主页。</p>
-          </section>
-          <section class="panel">
-            <h3>Signal</h3>
-            <p>Math + Physics · Notes · Open Source · Writing on Zhihu</p>
-          </section>
+${renderProfileBlocks(profile.blocks)}
           <section class="panel status-grid" aria-label="Site metrics">
             <div class="metric">
               <strong>3</strong>
@@ -80,4 +71,47 @@ export function renderIndexPage() {
       </section>
     </main>`,
   });
+}
+
+function renderPrimaryLinks(items) {
+  return items
+    .map((item) => {
+      const className = item.style === "primary" ? "button primary" : "button";
+      const external = isExternalHref(item.href) ? ' target="_blank" rel="noreferrer"' : "";
+      return `            <a class="${className}" href="${escapeAttribute(item.href)}"${external}>${escapeHtml(item.label)}</a>`;
+    })
+    .join("\n");
+}
+
+function renderProfileBlocks(blocks) {
+  return blocks
+    .map((block) => {
+      const links = block.links?.length ? `\n            <div class="panel-links">\n${renderPanelLinks(block.links)}\n            </div>` : "";
+      return `          <section class="panel profile-block" id="${escapeAttribute(block.id)}">
+            <p class="eyebrow">${escapeHtml(block.eyebrow)}</p>
+            <h2>${escapeHtml(block.title)}</h2>
+            <p>${escapeHtml(block.body)}</p>
+            <ul class="profile-list">
+${renderProfileItems(block.items)}
+            </ul>${links}
+          </section>`;
+    })
+    .join("\n");
+}
+
+function renderProfileItems(items) {
+  return items.map((item) => `              <li>${escapeHtml(item)}</li>`).join("\n");
+}
+
+function renderPanelLinks(items) {
+  return items
+    .map((item) => {
+      const external = isExternalHref(item.href) ? ' target="_blank" rel="noreferrer"' : "";
+      return `              <a href="${escapeAttribute(item.href)}"${external}>${escapeHtml(item.label)}</a>`;
+    })
+    .join("\n");
+}
+
+function isExternalHref(href) {
+  return href.startsWith("http://") || href.startsWith("https://");
 }

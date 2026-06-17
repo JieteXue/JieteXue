@@ -141,6 +141,47 @@ export function validateProjects(items, projectPath) {
   });
 }
 
+export function validateProfile(item, profilePath) {
+  const label = profilePath;
+  if (typeof item !== "object" || item === null || Array.isArray(item)) {
+    throw new Error(`${profilePath} must contain an object.`);
+  }
+
+  requireString(item, "name", label);
+  requireString(item, "tagline", label);
+  requireString(item, "intro", label);
+  requireArrayObject(item, "primaryLinks", label);
+  requireArrayObject(item, "blocks", label);
+
+  item.primaryLinks.forEach((link, index) => {
+    const linkLabel = `${profilePath}.primaryLinks[${index}]`;
+    requireString(link, "label", linkLabel);
+    requireString(link, "href", linkLabel);
+
+    if (link.style !== undefined) {
+      requireEnum(link, "style", ["primary"], linkLabel);
+    }
+  });
+
+  item.blocks.forEach((block, index) => {
+    const blockLabel = `${profilePath}.blocks[${index}]`;
+    requireId(block, "id", blockLabel);
+    requireString(block, "eyebrow", blockLabel);
+    requireString(block, "title", blockLabel);
+    requireString(block, "body", blockLabel);
+    requireArray(block, "items", blockLabel);
+
+    if (block.links !== undefined) {
+      requireArrayObject(block, "links", blockLabel);
+      block.links.forEach((link, linkIndex) => {
+        const linkLabel = `${blockLabel}.links[${linkIndex}]`;
+        requireString(link, "label", linkLabel);
+        requireString(link, "href", linkLabel);
+      });
+    }
+  });
+}
+
 function requireString(item, key, label) {
   if (typeof item?.[key] !== "string" || item[key].trim() === "") {
     throw new Error(`${label}.${key} must be a non-empty string.`);
@@ -157,6 +198,12 @@ function requireId(item, key, label) {
 function requireArray(item, key, label) {
   if (!Array.isArray(item?.[key]) || item[key].some((value) => typeof value !== "string" || value.trim() === "")) {
     throw new Error(`${label}.${key} must be an array of non-empty strings.`);
+  }
+}
+
+function requireArrayObject(item, key, label) {
+  if (!Array.isArray(item?.[key]) || item[key].some((value) => typeof value !== "object" || value === null || Array.isArray(value))) {
+    throw new Error(`${label}.${key} must be an array of objects.`);
   }
 }
 

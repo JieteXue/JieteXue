@@ -1,0 +1,56 @@
+{
+  "name": "JieteXue",
+  "tagline": "把学习变成可链接的记录",
+  "intro": "我是一个持续整理数学、物理和工具使用经验的学习者，把理解过程沉淀成文章、项目和可维护的公开记录。",
+  "primaryLinks": [
+    {
+      "label": "知乎文章",
+      "href": "./zhihu.html",
+      "style": "primary"
+    },
+    {
+      "label": "GitHub 项目",
+      "href": "./github.html"
+    },
+    {
+      "label": "知乎主页",
+      "href": "https://www.zhihu.com/people/7-63-5-13-42"
+    }
+  ],
+  "blocks": [
+    {
+      "id": "about",
+      "eyebrow": "About",
+      "title": "学习者",
+      "body": "这里记录我对数学、物理、工具和写作流程的长期整理。",
+      "items": [
+        "关注概念如何被理解，而不只是结果如何被记住。",
+        "偏好把推导、例子和工具经验整理成可回看的路径。"
+      ]
+    },
+    {
+      "id": "now",
+      "eyebrow": "Now",
+      "title": "探索中",
+      "body": "当前主要在整理数学物理笔记，同时搭建支持写作和知识管理的小工具。",
+      "items": [
+        "数学物理文章的章节化整理",
+        "LaTeX / TikZ / Mathematica 相关工具流",
+        "GitHub Pages 静态主页和数据生成脚本"
+      ]
+    },
+    {
+      "id": "interests",
+      "eyebrow": "Interests",
+      "title": "长期兴趣",
+      "body": "这些主题会逐渐成为文章、系列或项目。",
+      "items": [
+        "数学结构语言",
+        "经典力学与电磁学",
+        "流体力学笔记",
+        "计算与可视化工具",
+        "知识整理自动化"
+      ]
+    }
+  ]
+}
