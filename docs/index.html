@@ -27,114 +27,14 @@
     </header>
 
     <main class="site-shell home-shell">
-      <section class="identity-strip" aria-labelledby="hero-title">
-        <div class="identity-copy">
-          <p class="eyebrow">Personal knowledge console</p>
+      <section class="dashboard-hero" aria-labelledby="hero-title">
+        <div class="dashboard-intro">
+          <p class="eyebrow">Personal dashboard</p>
           <h1 id="hero-title">JieteXue</h1>
           <p class="tagline">把学习变成可链接的记录</p>
           <p class="lead">我是一个持续整理数学、物理和工具使用经验的学习者，把理解过程沉淀成文章、项目和可维护的公开记录。</p>
         </div>
-        <div class="identity-actions" aria-label="Primary links">
-              <a class="button primary" href="./zhihu.html">知乎文章</a>
-              <a class="button" href="./github.html">GitHub 项目</a>
-              <a class="button" href="https://www.zhihu.com/people/7-63-5-13-42" target="_blank" rel="noreferrer">知乎主页</a>
-        </div>
-      </section>
-
-      <div class="workspace-layout">
-        <section class="workspace-main" aria-label="Profile and activity">
-          <div class="feed-head">
-            <p class="eyebrow">Workspace</p>
-            <h2>学习、写作与工具流</h2>
-            <p>这里更像一个公开的工作台：文章、项目、工具和长期兴趣按可维护的数据结构逐步展开。</p>
-          </div>
-          <section class="panel profile-block timeline-block">
-            <p class="eyebrow">Timeline</p>
-            <h2>履历 / 记录</h2>
-            <div class="timeline-list">
-              <article class="timeline-item">
-                <span>长期</span>
-                <div>
-                  <h3>数学与物理学习记录</h3>
-                  <p>围绕推导、概念理解和例题脉络，把零散学习材料整理成可回看的文章与章节。</p>
-                </div>
-              </article>
-              <article class="timeline-item">
-                <span>持续</span>
-                <div>
-                  <h3>知乎文章写作</h3>
-                  <p>发布数学、物理、工具和计算相关内容，并逐步按主题、系列和章节重新组织。</p>
-                </div>
-              </article>
-              <article class="timeline-item">
-                <span>进行中</span>
-                <div>
-                  <h3>个人 GitHub Pages 主页</h3>
-                  <p>用静态页面和 JSON 数据维护公开入口，让文章、项目和个人信息可以长期更新。</p>
-                </div>
-              </article>
-              <article class="timeline-item">
-                <span>探索中</span>
-                <div>
-                  <h3>写作与计算工具流</h3>
-                  <p>整理 LaTeX / TikZ / Mathematica 等工具经验，把重复流程变成更稳定的工作流。</p>
-                </div>
-              </article>
-            </div>
-          </section>
-          <section class="panel profile-block" id="about">
-            <p class="eyebrow">About</p>
-            <h2>学习者</h2>
-            <p>这里记录我对数学、物理、工具和写作流程的长期整理。</p>
-            <ul class="profile-list">
-              <li>关注概念如何被理解，而不只是结果如何被记住。</li>
-              <li>偏好把推导、例子和工具经验整理成可回看的路径。</li>
-            </ul>
-          </section>
-          <section class="panel profile-block" id="now">
-            <p class="eyebrow">Now</p>
-            <h2>探索中</h2>
-            <p>当前主要在整理数学物理笔记，同时搭建支持写作和知识管理的小工具。</p>
-            <ul class="profile-list">
-              <li>数学物理文章的章节化整理</li>
-              <li>LaTeX / TikZ / Mathematica 相关工具流</li>
-              <li>GitHub Pages 静态主页和数据生成脚本</li>
-            </ul>
-          </section>
-          <section class="panel profile-block" id="interests">
-            <p class="eyebrow">Interests</p>
-            <h2>长期兴趣</h2>
-            <p>这些主题会逐渐成为文章、系列或项目。</p>
-            <ul class="profile-list">
-              <li>数学结构语言</li>
-              <li>物理笔记</li>
-              <li>计算与可视化工具</li>
-              <li>知识整理自动化</li>
-            </ul>
-          </section>
-          <section class="route-list" aria-label="Site sections">
-            <a class="route-row" href="./zhihu.html">
-              <span>Zhihu</span>
-              <strong>知乎文章</strong>
-              <p>按章节、系列和主题整理已经发表在知乎上的文章。</p>
-            </a>
-            <a class="route-row" href="./github.html">
-              <span>GitHub</span>
-              <strong>GitHub 项目</strong>
-              <p>展示精选仓库、项目状态和工具建设记录。</p>
-            </a>
-            <a class="route-row" href="https://github.com/JieteXue/JieteXue" target="_blank" rel="noreferrer">
-              <span>Profile</span>
-              <strong>About / Links</strong>
-              <p>回到 profile 仓库，查看 README、统计图和公开入口。</p>
-            </a>
-          </section>
-        </section>
-
-        <aside class="context-rail" aria-label="Profile context">
-          <section class="rail-panel">
-            <p class="eyebrow">Context</p>
-            <h2>个人信息</h2>
+        <aside class="dashboard-profile" aria-label="Profile summary">
             <dl class="intro-details">
               <div>
                 <dt>身份</dt>
@@ -149,27 +49,76 @@
                 <dd>知乎文章、GitHub 项目、知识整理</dd>
               </div>
             </dl>
-          </section>
-          <section class="rail-panel">
-            <p class="eyebrow">Map</p>
-            <h2>站点入口</h2>
-            <nav class="rail-links" aria-label="Home shortcuts">
-              <a href="./zhihu.html">知乎文章</a>
-              <a href="./github.html">GitHub 项目</a>
-              <a href="https://www.zhihu.com/people/7-63-5-13-42" target="_blank" rel="noreferrer">知乎主页</a>
-            </nav>
-          </section>
-          <section class="rail-panel">
-            <p class="eyebrow">Build</p>
-            <h2>维护方式</h2>
-            <ul class="rail-list">
-              <li>首页信息来自 <code>data/profile.json</code></li>
-              <li>文章、分类、系列和项目由 JSON 生成</li>
-              <li>静态发布到 GitHub Pages，无后台依赖</li>
-            </ul>
-          </section>
         </aside>
-      </div>
+      </section>
+
+      <section class="dashboard-grid" aria-label="Site dashboard">
+        <a class="dashboard-card dashboard-card-large" href="./zhihu.html">
+          <p class="eyebrow">Zhihu</p>
+          <h2>知乎文章</h2>
+          <p>按章节、系列和主题整理已经发表在知乎上的文章，是当前最主要的内容入口。</p>
+          <span>Open writing archive</span>
+        </a>
+        <a class="dashboard-card" href="./github.html">
+          <p class="eyebrow">GitHub</p>
+          <h2>项目仓库</h2>
+          <p>精选仓库、工具建设和后续可公开维护的代码项目。</p>
+          <span>Open projects</span>
+        </a>
+        <section class="dashboard-card dashboard-card-muted">
+          <p class="eyebrow">Now</p>
+          <h2>探索中</h2>
+          <p>当前主要在整理数学物理笔记，同时搭建支持写作和知识管理的小工具。</p>
+        </section>
+        <section class="dashboard-card dashboard-card-wide">
+          <p class="eyebrow">About</p>
+          <h2>学习者</h2>
+          <p>这里记录我对数学、物理、工具和写作流程的长期整理。</p>
+          <ul class="compact-list">
+            <li>关注概念如何被理解，而不只是结果如何被记住。</li>
+            <li>偏好把推导、例子和工具经验整理成可回看的路径。</li>
+          </ul>
+        </section>
+        <section class="dashboard-card">
+          <p class="eyebrow">Interests</p>
+          <h2>长期兴趣</h2>
+          <div class="tag-row dashboard-tags">
+            <span>数学结构语言</span>
+            <span>物理笔记</span>
+            <span>计算与可视化工具</span>
+            <span>知识整理自动化</span>
+          </div>
+        </section>
+        <section class="dashboard-card">
+          <p class="eyebrow">Timeline</p>
+          <h2>履历 / 记录</h2>
+          <div class="mini-timeline">
+            <div>
+              <span>长期</span>
+              <strong>数学与物理学习记录</strong>
+            </div>
+            <div>
+              <span>持续</span>
+              <strong>知乎文章写作</strong>
+            </div>
+            <div>
+              <span>进行中</span>
+              <strong>个人 GitHub Pages 主页</strong>
+            </div>
+          </div>
+        </section>
+        <section class="dashboard-card dashboard-card-muted">
+          <p class="eyebrow">Build</p>
+          <h2>维护方式</h2>
+          <p>首页信息来自 <code>data/profile.json</code>，文章、分类、系列和项目由 JSON 生成。</p>
+        </section>
+        <a class="dashboard-card" href="https://github.com/JieteXue/JieteXue" target="_blank" rel="noreferrer">
+          <p class="eyebrow">Profile</p>
+          <h2>About / Links</h2>
+          <p>回到 profile 仓库，查看 README、统计图和更多公开入口。</p>
+          <span>Open profile repo</span>
+        </a>
+      </section>
     </main>
 
     <footer class="footer">

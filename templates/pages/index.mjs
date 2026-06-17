@@ -10,72 +10,64 @@ export function renderIndexPage(profile) {
     <link rel="prefetch" href="./github.html" as="document" />`,
     footer: "Built for GitHub Pages · Updated from structured data files.",
     main: `    <main class="site-shell home-shell">
-      <section class="identity-strip" aria-labelledby="hero-title">
-        <div class="identity-copy">
-          <p class="eyebrow">Personal knowledge console</p>
+      <section class="dashboard-hero" aria-labelledby="hero-title">
+        <div class="dashboard-intro">
+          <p class="eyebrow">Personal dashboard</p>
           <h1 id="hero-title">${escapeHtml(profile.name)}</h1>
           <p class="tagline">${escapeHtml(profile.tagline)}</p>
           <p class="lead">${escapeHtml(profile.intro)}</p>
         </div>
-        <div class="identity-actions" aria-label="Primary links">
-${renderPrimaryLinks(profile.primaryLinks)}
-        </div>
+        <aside class="dashboard-profile" aria-label="Profile summary">
+${renderIntroDetails(profile.introDetails)}
+        </aside>
       </section>
 
-      <div class="workspace-layout">
-        <section class="workspace-main" aria-label="Profile and activity">
-          <div class="feed-head">
-            <p class="eyebrow">Workspace</p>
-            <h2>学习、写作与工具流</h2>
-            <p>这里更像一个公开的工作台：文章、项目、工具和长期兴趣按可维护的数据结构逐步展开。</p>
-          </div>
-${renderTimeline(profile.timeline)}
-${renderProfileBlocks(profile.blocks)}
-          <section class="route-list" aria-label="Site sections">
-            <a class="route-row" href="./zhihu.html">
-              <span>Zhihu</span>
-              <strong>知乎文章</strong>
-              <p>按章节、系列和主题整理已经发表在知乎上的文章。</p>
-            </a>
-            <a class="route-row" href="./github.html">
-              <span>GitHub</span>
-              <strong>GitHub 项目</strong>
-              <p>展示精选仓库、项目状态和工具建设记录。</p>
-            </a>
-            <a class="route-row" href="https://github.com/JieteXue/JieteXue" target="_blank" rel="noreferrer">
-              <span>Profile</span>
-              <strong>About / Links</strong>
-              <p>回到 profile 仓库，查看 README、统计图和公开入口。</p>
-            </a>
-          </section>
+      <section class="dashboard-grid" aria-label="Site dashboard">
+        <a class="dashboard-card dashboard-card-large" href="./zhihu.html">
+          <p class="eyebrow">Zhihu</p>
+          <h2>知乎文章</h2>
+          <p>按章节、系列和主题整理已经发表在知乎上的文章，是当前最主要的内容入口。</p>
+          <span>Open writing archive</span>
+        </a>
+        <a class="dashboard-card" href="./github.html">
+          <p class="eyebrow">GitHub</p>
+          <h2>项目仓库</h2>
+          <p>精选仓库、工具建设和后续可公开维护的代码项目。</p>
+          <span>Open projects</span>
+        </a>
+        <section class="dashboard-card dashboard-card-muted">
+          <p class="eyebrow">Now</p>
+          <h2>${escapeHtml(getBlockTitle(profile.blocks, "now", "探索中"))}</h2>
+          <p>${escapeHtml(getBlockBody(profile.blocks, "now", "整理数学物理笔记，同时搭建支持写作和知识管理的小工具。"))}</p>
         </section>
-
-        <aside class="context-rail" aria-label="Profile context">
-          <section class="rail-panel">
-            <p class="eyebrow">Context</p>
-            <h2>个人信息</h2>
-${renderIntroDetails(profile.introDetails)}
-          </section>
-          <section class="rail-panel">
-            <p class="eyebrow">Map</p>
-            <h2>站点入口</h2>
-            <nav class="rail-links" aria-label="Home shortcuts">
-              <a href="./zhihu.html">知乎文章</a>
-              <a href="./github.html">GitHub 项目</a>
-              <a href="https://www.zhihu.com/people/7-63-5-13-42" target="_blank" rel="noreferrer">知乎主页</a>
-            </nav>
-          </section>
-          <section class="rail-panel">
-            <p class="eyebrow">Build</p>
-            <h2>维护方式</h2>
-            <ul class="rail-list">
-              <li>首页信息来自 <code>data/profile.json</code></li>
-              <li>文章、分类、系列和项目由 JSON 生成</li>
-              <li>静态发布到 GitHub Pages，无后台依赖</li>
-            </ul>
-          </section>
-        </aside>
-      </div>
+        <section class="dashboard-card dashboard-card-wide">
+          <p class="eyebrow">About</p>
+          <h2>${escapeHtml(getBlockTitle(profile.blocks, "about", "学习者"))}</h2>
+          <p>${escapeHtml(getBlockBody(profile.blocks, "about", "这里记录我对数学、物理、工具和写作流程的长期整理。"))}</p>
+${renderCompactItems(getBlockItems(profile.blocks, "about"))}
+        </section>
+        <section class="dashboard-card">
+          <p class="eyebrow">Interests</p>
+          <h2>${escapeHtml(getBlockTitle(profile.blocks, "interests", "长期兴趣"))}</h2>
+${renderTagCloud(getBlockItems(profile.blocks, "interests"))}
+        </section>
+        <section class="dashboard-card">
+          <p class="eyebrow">Timeline</p>
+          <h2>履历 / 记录</h2>
+${renderTimelinePreview(profile.timeline)}
+        </section>
+        <section class="dashboard-card dashboard-card-muted">
+          <p class="eyebrow">Build</p>
+          <h2>维护方式</h2>
+          <p>首页信息来自 <code>data/profile.json</code>，文章、分类、系列和项目由 JSON 生成。</p>
+        </section>
+        <a class="dashboard-card" href="https://github.com/JieteXue/JieteXue" target="_blank" rel="noreferrer">
+          <p class="eyebrow">Profile</p>
+          <h2>About / Links</h2>
+          <p>回到 profile 仓库，查看 README、统计图和更多公开入口。</p>
+          <span>Open profile repo</span>
+        </a>
+      </section>
     </main>`,
   });
 }
@@ -107,57 +99,58 @@ function renderPrimaryLinks(items) {
     .join("\n");
 }
 
-function renderTimeline(items = []) {
+function renderCompactItems(items = []) {
   if (items.length === 0) {
     return "";
   }
 
-  return `          <section class="panel profile-block timeline-block">
-            <p class="eyebrow">Timeline</p>
-            <h2>履历 / 记录</h2>
-            <div class="timeline-list">
+  return `          <ul class="compact-list">
+${items.map((item) => `            <li>${escapeHtml(item)}</li>`).join("\n")}
+          </ul>`;
+}
+
+function renderTagCloud(items = []) {
+  if (items.length === 0) {
+    return "";
+  }
+
+  return `          <div class="tag-row dashboard-tags">
+${items.map((item) => `            <span>${escapeHtml(item)}</span>`).join("\n")}
+          </div>`;
+}
+
+function renderTimelinePreview(items = []) {
+  if (items.length === 0) {
+    return "";
+  }
+
+  return `          <div class="mini-timeline">
 ${items
+  .slice(0, 3)
   .map((item) => {
-    return `              <article class="timeline-item">
-                <span>${escapeHtml(item.period)}</span>
-                <div>
-                  <h3>${escapeHtml(item.title)}</h3>
-                  <p>${escapeHtml(item.description)}</p>
-                </div>
-              </article>`;
+    return `            <div>
+              <span>${escapeHtml(item.period)}</span>
+              <strong>${escapeHtml(item.title)}</strong>
+            </div>`;
   })
   .join("\n")}
-            </div>
-          </section>`;
+          </div>`;
 }
 
-function renderProfileBlocks(blocks) {
-  return blocks
-    .map((block) => {
-      const links = block.links?.length ? `\n            <div class="panel-links">\n${renderPanelLinks(block.links)}\n            </div>` : "";
-      return `          <section class="panel profile-block" id="${escapeAttribute(block.id)}">
-            <p class="eyebrow">${escapeHtml(block.eyebrow)}</p>
-            <h2>${escapeHtml(block.title)}</h2>
-            <p>${escapeHtml(block.body)}</p>
-            <ul class="profile-list">
-${renderProfileItems(block.items)}
-            </ul>${links}
-          </section>`;
-    })
-    .join("\n");
+function getBlock(blocks, id) {
+  return blocks.find((block) => block.id === id);
 }
 
-function renderProfileItems(items) {
-  return items.map((item) => `              <li>${escapeHtml(item)}</li>`).join("\n");
+function getBlockTitle(blocks, id, fallback) {
+  return getBlock(blocks, id)?.title ?? fallback;
 }
 
-function renderPanelLinks(items) {
-  return items
-    .map((item) => {
-      const external = isExternalHref(item.href) ? ' target="_blank" rel="noreferrer"' : "";
-      return `              <a href="${escapeAttribute(item.href)}"${external}>${escapeHtml(item.label)}</a>`;
-    })
-    .join("\n");
+function getBlockBody(blocks, id, fallback) {
+  return getBlock(blocks, id)?.body ?? fallback;
+}
+
+function getBlockItems(blocks, id) {
+  return getBlock(blocks, id)?.items ?? [];
 }
 
 function isExternalHref(href) {
